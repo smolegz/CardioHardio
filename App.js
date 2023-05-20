@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,14 +7,19 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
 import { useFonts, PassionOne_700Bold, PassionOne_900Black, PassionOne_400Regular } from '@expo-google-fonts/passion-one';
+import { FiraSans_400Regular_Italic, FiraSans_600SemiBold_Italic } from '@expo-google-fonts/fira-sans';
 
-
+import MyDrawer from './components/MyDrawer';
 
 const Stack = createNativeStackNavigator();
 
+
 export default function App() {
   let [fontsLoaded] = useFonts({
-    PassionOne_700Bold
+    PassionOne_700Bold,
+    PassionOne_400Regular,
+    FiraSans_400Regular_Italic,
+    FiraSans_600SemiBold_Italic,
   });
 
   if (!fontsLoaded) {
@@ -21,10 +27,11 @@ export default function App() {
   }
   return (
     <NavigationContainer>
+      
       <Stack.Navigator>
         <Stack.Screen options={ {headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options={ {headerShown: false}} name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Welcome Home" options={ {headerShown: false}} component={HomeScreen} />
+        <Stack.Screen name="Welcome Home" options={ {headerShown: false}} component={MyDrawer} />
       </Stack.Navigator>
     </NavigationContainer>
   )
