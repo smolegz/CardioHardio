@@ -9,17 +9,16 @@ import Home from '../components/Home'
 let data;
 const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
- 
+  console.log(userRefid);
   const navigation = useNavigation();
-  const q = query(colRef, where("id", "==", 
-  userRefid));
+  const q = query(colRef, where("id", "==", userRefid));
 
   useEffect(() => onSnapshot(q, (snapshot) => {
     snapshot.docs.forEach((doc) => {
       data = doc.data().name
       setIsLoading(false);
     })
-  }),[data]);
+  }),[]);
   
   return (
     <View style={styles.container}>

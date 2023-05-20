@@ -4,6 +4,7 @@ import React, {useState} from 'react'
 import { fireAuth, db, colRef } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, onSnapshot, query, where} from "firebase/firestore";
+import One from "../assets/one.svg";
 
 let userRefid;
 const LoginScreen = () => { 
@@ -11,7 +12,6 @@ const LoginScreen = () => {
 	const [password, setPassword] = useState('')
     const navigation = useNavigation();
     
-
     const createUserProfile = async (userAuth) => {
         if (!userAuth) return;
         const createdAt = new Date();
@@ -20,9 +20,11 @@ const LoginScreen = () => {
             userEmail: email,
             createdAt: createdAt,
             name: null
-        });
+        }).then((userRef) => {
         userRefid = userRef.id;
-        return userRef;
+        console.log("idzz",userRefid)})
+        navigation.replace("Details")
+       
     }
 
 	const handleSignUp = () => {
@@ -34,9 +36,6 @@ const LoginScreen = () => {
             alert("Successful");
             
 		})
-        .then(() => {
-            navigation.replace("Details")
-          })
 		.catch(error => alert(error.message))
 	}
 
@@ -49,8 +48,9 @@ const LoginScreen = () => {
             onSnapshot(q, (snapshot) => {
                 snapshot.docs.forEach((doc) => userRefid = doc.data().id)
             });
-		})
+        })
         .then(() => {
+            console.log("id", userRefid)
             navigation.replace("Welcome Home")
           })
 		.catch(error => alert(error.message))
@@ -60,6 +60,7 @@ const LoginScreen = () => {
     <KeyboardAvoidingView
         style={styles.container}
         behavior="padding">
+        <One style={styles.svg} />
         <View style={styles.titleContainer}>
             <Text style={styles.title}> CardioHARDio</Text>
         </View>
@@ -102,9 +103,17 @@ export {userRefid};
 export default LoginScreen
 
 const styles = StyleSheet.create({
+    svg: {
+        height: '250',
+        width: '300',
+        borderRadius: '100%',
+        borderWidth: 1,
+        borderColor: 'white',
+        marginTop: -70,
+    },
     titleContainer: {
-        paddingBottom: 50,
-        paddingTop: 30,
+        paddingBottom: 10,
+        paddingTop: 10,
     },
     title: {
         fontFamily: 'PassionOne_700Bold',
@@ -115,9 +124,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: 'white',
+        margin: 0,
     },
     inputContainer: {
         width: '80%',
+        marginTop: 0,
     },
     input: {
         backgroundColor: 'white',
@@ -125,6 +137,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderRadius: 10,
         marginTop: '5%',
+        backgroundColor: '#F5F5F5',
     },
     buttonContainer: {
         width: '60%',

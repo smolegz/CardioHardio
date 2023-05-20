@@ -16,6 +16,7 @@ const Home = (props) => {
   }
     return (
         <ScrollView style={styles.innerContainer}>
+          <View style={styles.curve}>
           <View style={styles.profile}>
             <View style={styles.pictureContainer}>
               <View style={styles.innerRadius}>
@@ -31,8 +32,9 @@ const Home = (props) => {
             <TouchableOpacity><Text>Edit Profile</Text></TouchableOpacity>
             </View>
           </View>
+          </View>
           <View style={styles.MenuContainer}>
-          <TouchableOpacity style={styles.MenuButton}><Text >Edit Profile</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
           <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
           <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
           <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
@@ -56,12 +58,21 @@ const styles = StyleSheet.create({
       // justifyContent: 'space-between',
       // alignItems: 'center',
       width: '100%',
-      height: '100%'
+      height: '100%',
+      backgroundColor: 'white'
     },
     welcome: {
       fontSize: 25,
-      fontFamily: 'PassionOne_400Regular',
+      //fontFamily: 'PassionOne_900Black',
       
+    },
+    curve: {
+      zIndex: '-1',
+      backgroundColor: '#7FB3FF',
+      height: '23%',
+      borderBottomEndRadius: 28,
+      borderBottomLeftRadius: 28, 
+      opacity: 0.8,
     },  
     button: {
       backgroundColor: '#0782F9',
@@ -80,7 +91,6 @@ const styles = StyleSheet.create({
     tinyLogo: {
       width: 70,
       height: 70,
-      borderRadius: '50%',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
@@ -90,7 +100,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-start',
-      marginTop: '15%',
+      marginTop: '12%',
       marginLeft: 0,
       width: '90%'
     }, 
@@ -101,7 +111,8 @@ const styles = StyleSheet.create({
       width: 80,
       borderRadius: '50%',    
       justifyContent: 'center',
-      alignItems: 'center'  
+      alignItems: 'center',
+      marginLeft: '7%',
     },
     innerRadius: {
       borderWidth: 1,

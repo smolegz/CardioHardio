@@ -8,6 +8,7 @@ import { userRefid } from './LoginScreen';
 const DetailsScreen = () => {
     const [name, setName] = useState('');
     const navigation = useNavigation();
+    
     const userRef = doc(db, "users", userRefid); 
 
     const handleName = () => {

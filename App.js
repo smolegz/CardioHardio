@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -9,13 +8,12 @@ import DetailsScreen from './screens/DetailsScreen';
 import { useFonts, PassionOne_700Bold, PassionOne_900Black, PassionOne_400Regular } from '@expo-google-fonts/passion-one';
 
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   let [fontsLoaded] = useFonts({
-    PassionOne_700Bold,
-    PassionOne_900Black,
-    PassionOne_400Regular
+    PassionOne_700Bold
   });
 
   if (!fontsLoaded) {
