@@ -23,11 +23,13 @@ const firebaseConfig = {
 let firebaseApp;
 let fireAuth;
 if (getApps().length < 1) {
+  console.log("1")
   firebaseApp = initializeApp(firebaseConfig);
   fireAuth = initializeAuth(firebaseApp, {
     persistence: getReactNativePersistence(AsyncStorage),
   });
 } else {
+  console.log("2")
   firebaseApp = getApp();
   fireAuth = getAuth();
 }
@@ -35,15 +37,5 @@ if (getApps().length < 1) {
 const db = getFirestore(firebaseApp);
 
 const colRef = collection(db, "users")
-
-// getDocs(colRef).then((snapshot) => {
-//   let users = []
-//   snapshot.docs.forEach((doc) => {
-//     users.push({...doc.data(), id: doc.id})
-//   })
-// }).catch(err => {
-//   console.log(err.message)
-// })
-
 
 export {fireAuth, db, colRef};

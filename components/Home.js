@@ -3,29 +3,44 @@ import React, {useState} from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { fireAuth} from '../firebase'
 import Logo from "../assets/drawer.svg";
+import One from "../assets/one.svg";
+import Two from "../assets/two.svg";
+import Three from "../assets/three.svg";
+import Four from "../assets/four.svg";
+import Five from "../assets/five.svg";
 
-// const DATA = [
-//   {
-//     activities: 'BMI Calculator',
-//     id: '1'
-//   },
-//   {
-//     activities: 'Pedometer',
-//     id: '2'
-//   }, 
-//   {
-//     activities: 'Healthy Recipe',
-//     id: '3'
-//   },
-//   {
-//     activities: 'Health Analysis',
-//     id: '4'
-//   },
-//   {
-//     activities: 'Coming Soon',
-//     id: '5'
-//   }
-// ]
+const DATA = [
+  {
+    activities: 'BMI Calculator',
+    id: '1',
+    color: '#FB4A15',
+    photo: <One style={{height: 120, width: 120}}/>
+  },
+  {
+    activities: 'Pedometer',
+    id: '2',
+    color: '#6B9CDE',
+    photo: <Two style={{height: 120, width: 120}}/>
+  }, 
+  {
+    activities: 'Healthy Recipe',
+    id: '3',
+    color: '#DE6BDC',
+    photo: <Three style={{height: 120, width: 120}}/>
+  },
+  {
+    activities: 'Health Analysis',
+    id: '4',
+    color: '#6BDE7A',
+    photo: <Four style={{height: 120, width: 120}}/>
+  },
+  {
+    activities: 'Coming Soon',
+    id: '5',
+    color: '#FAD69C',
+    photo: <Five style={{height: 120, width: 120}}/>
+  }
+]
 
 const Item = ({item, onPress}) => (
   <TouchableOpacity onPress={onPress} style={styles.MenuButton}>
@@ -46,6 +61,7 @@ const Home = (props) => {
   }
 
     return (
+      
         <ScrollView style={styles.innerContainer}>
 
           <View style={styles.curve}>
@@ -62,7 +78,7 @@ const Home = (props) => {
               <View style={styles.titleContainer}> 
                   <Text style={styles.welcome}>Welcome Home, {props.name}</Text>
               
-              <TouchableOpacity><Text>Edit Profile</Text></TouchableOpacity>
+              <TouchableOpacity><Text style={{color: 'white',}}>Edit Profile</Text></TouchableOpacity>
               </View>
               </View>
               <TouchableOpacity style={styles.drawer} onPress={() => navigation.openDrawer()}>
@@ -70,23 +86,35 @@ const Home = (props) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={styles.exploreContainer}>
-            <Text style={styles.exploreText}> Explore </Text>
+       
+            <View style={styles.exploreContainer}>
+              <Text style={styles.exploreText}> Explore </Text>
+            </View>
+            <View style={styles.bodyContainer}>
+              <View style={styles.MenuContainer}>
+            {
+                DATA.map((item) => {
+                  return (
+                  <TouchableOpacity key={item.id} style={[styles.MenuButton,{backgroundColor: `${item.color}`}]}>
+                    {item.photo}
+                    <Text style={{
+                      fontFamily: 'PassionOne_400Regular',
+                      fontSize: 18, 
+                      color: '#ffffff',
+                    }}
+                  >{item.activities}</Text>
+                  </TouchableOpacity>
+                )})
+            }
+            </View> 
           </View>
-          <View style={styles.MenuContainer}>
-          <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.MenuButton}><Text>Edit Profile</Text></TouchableOpacity>
+          <View style={styles.signout}>
+              <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+                <Text style={styles.buttonText}>Sign out</Text>
+              </TouchableOpacity>
           </View>
-          
-          <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-            <Text style={styles.buttonText}>Sign out</Text>
-          </TouchableOpacity>
-  
         </ScrollView>
-
+        
     )
 }
 
@@ -97,19 +125,21 @@ const styles = StyleSheet.create({
       flex: 1,
       width: '100%',
       height: '100%',
-      backgroundColor: 'white'
+      backgroundColor: '#EEEEEE',
+  
     },
     welcome: {
       fontSize: 18,
-      fontFamily: 'FiraSans_600SemiBold_Italic',      
+      fontFamily: 'FiraSans_600SemiBold_Italic',
+      color: 'white',      
     },
     curve: {
       zIndex: '-1',
-      backgroundColor: '#F8A9F8',
+      backgroundColor: '#537188',
       height: 123,
       borderBottomEndRadius: 28,
       borderBottomLeftRadius: 28, 
-      opacity: 1,
+      flex: 1,
     },
     svg: {
       height: 20,
@@ -120,16 +150,15 @@ const styles = StyleSheet.create({
     button: {
       backgroundColor: '#0782F9',
       width: '60%',
-      marginBottom: 10,
       padding: 15,
       borderRadius: 10,
-      alignItems: 'center',
-      marginTop: 40,
+    
     },
     buttonText: {
       color: 'white',
       fontWeight: '700',
-      fontSize: 16, 
+      fontSize: 18, 
+      alignSelf: 'center'
     },
     tinyLogo: {
       width: 50,
@@ -151,18 +180,18 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
     },
     pictureContainer: {
-      borderColor: '#00000E',
+      borderColor: 'white',
       borderWidth: 2,
       height: 80,
       width: 80,
       borderRadius: '50%',    
       justifyContent: 'center',
       alignItems: 'center',
-      marginLeft: '3%',
+      marginLeft: '4%',
     },
     innerRadius: {
       borderWidth: 1,
-      borderColor: '#00000E',
+      borderColor: 'white',
       borderRadius: '50%',
       height: 72,
       width: 72,
@@ -174,21 +203,18 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     }, 
     MenuContainer: {
-      marginTop: 0,
+      marginTop: 20, 
       flexDirection:'row',
       flexWrap: 'wrap',
       width: '100%',
-      justifyContent: 'space-evenly',
- 
-    
+      justifyContent: 'flex-start',
+      flex: 1,
     },
     MenuButton: {
-      borderWidth: 1,
-      borderColor: 'black',
-      padding: 40,
+      padding: 0,
       margin: 2,
-      marginLeft: 0,
-      marginRight: 0,
+      marginLeft: 15,
+      marginBottom: 5,
       width: '45%',
       justifyContent: 'center',
       alignItems:'center',
@@ -198,10 +224,26 @@ const styles = StyleSheet.create({
       display: 'flex',
       padding: '3%',
       paddingBottom: 0,
-      
+      justifyContent: 'flex-end',
+      flex: 1,
     },
     exploreText: {
       fontFamily: 'FiraSans_600SemiBold_Italic',
       fontSize: 40,
+      textDecorationLine: 'underline',
+      color: '#0C134F'
+    },
+    bodyContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignContentt: 'space-between',
+      height: 600,
+    }, 
+    signout: {
+      marginTop: '60%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
     }
   })

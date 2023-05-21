@@ -1,11 +1,13 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import HomeScreen from '../screens/HomeScreen';
 import AboutScreen from '../screens/AboutScreen';
 import React from "react";
 
+
 const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
+
   return (
     <Drawer.Navigator
         screenOptions={{
@@ -32,6 +34,7 @@ function MyDrawer() {
         }}>
       <Drawer.Screen name="Home" component={HomeScreen} options={{headerShown:false}} />
       <Drawer.Screen name="About Us" component={AboutScreen} options={{headerShown:false}}/>
+    
     </Drawer.Navigator>
   );
 }

@@ -1,12 +1,12 @@
 import { useNavigation } from '@react-navigation/core'
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, {useState} from 'react'
 import { fireAuth, db, colRef } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, onSnapshot, query, where} from "firebase/firestore";
+import { addDoc, collection, onSnapshot, query, where, getDocs} from "firebase/firestore";
 import One from "../assets/one.svg";
 
-let userRefid;
+let userRefid = "0G27ViH7p4QumxaYkXRo";
 const LoginScreen = () => { 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -39,19 +39,26 @@ const LoginScreen = () => {
 		.catch(error => alert(error.message))
 	}
 
+    const getQuery = async (q) => {
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            userRefid = doc.data().id;
+          });
+        navigation.replace("Welcome Home")
+    }
+
     const handleLogin = () => {
         signInWithEmailAndPassword(fireAuth, email, password)
         .then(userCredentials => {
 			const user = userCredentials.user;
+            console.log(user.email)
 			console.log("Logged in into: ", user.email);
+            alert("Successful")
             const q = query(colRef, where("userEmail", "==", user.email))
-            onSnapshot(q, (snapshot) => {
-                snapshot.docs.forEach((doc) => userRefid = doc.data().id)
-            });
+            getQuery(q);
         })
         .then(() => {
-            console.log("id", userRefid)
-            navigation.replace("Welcome Home")
+            console.log("idd", userRefid)
           })
 		.catch(error => alert(error.message))
     }

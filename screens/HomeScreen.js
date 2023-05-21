@@ -8,9 +8,11 @@ import Home from '../components/Home'
 
 let data;
 const HomeScreen = () => {
+  
+  
   const [isLoading, setIsLoading] = useState(true);
-  console.log(userRefid);
   const navigation = useNavigation();
+  console.log("HEREEEE")
   const q = query(colRef, where("id", "==", userRefid));
 
   useEffect(() => onSnapshot(q, (snapshot) => {
@@ -38,5 +40,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white'
   },
 })

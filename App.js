@@ -4,12 +4,12 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
 import { useFonts, PassionOne_700Bold, PassionOne_900Black, PassionOne_400Regular } from '@expo-google-fonts/passion-one';
 import { FiraSans_400Regular_Italic, FiraSans_600SemiBold_Italic } from '@expo-google-fonts/fira-sans';
 
 import MyDrawer from './components/MyDrawer';
+
 
 const Stack = createNativeStackNavigator();
 
