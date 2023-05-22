@@ -5,8 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
 import DetailsScreen from './screens/DetailsScreen';
+import ProfileScreen from './screens/ProfileScreen'
 import { useFonts, PassionOne_700Bold, PassionOne_900Black, PassionOne_400Regular } from '@expo-google-fonts/passion-one';
-import { FiraSans_400Regular_Italic, FiraSans_600SemiBold_Italic } from '@expo-google-fonts/fira-sans';
+import { FiraSans_400Regular_Italic, FiraSans_600SemiBold_Italic, FiraSans_300Light, FiraSans_700Bold } from '@expo-google-fonts/fira-sans';
 
 import MyDrawer from './components/MyDrawer';
 
@@ -20,6 +21,8 @@ export default function App() {
     PassionOne_400Regular,
     FiraSans_400Regular_Italic,
     FiraSans_600SemiBold_Italic,
+    FiraSans_300Light,
+    FiraSans_700Bold,
   });
 
   if (!fontsLoaded) {
@@ -32,6 +35,7 @@ export default function App() {
         <Stack.Screen options={ {headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options={ {headerShown: false}} name="Details" component={DetailsScreen} />
         <Stack.Screen name="Welcome Home" options={ {headerShown: false}} component={MyDrawer} />
+        <Stack.Screen name="Profile" options={ {headerShown: false}} component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

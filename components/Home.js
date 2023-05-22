@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, FlatList, SafeAreaView } from 'react-native'
-import React, {useState} from 'react'
-import { useNavigation } from '@react-navigation/native'
+import React, {useEffect, useState} from 'react'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { fireAuth} from '../firebase'
 import Logo from "../assets/drawer.svg";
 import One from "../assets/one.svg";
@@ -8,6 +8,7 @@ import Two from "../assets/two.svg";
 import Three from "../assets/three.svg";
 import Four from "../assets/four.svg";
 import Five from "../assets/five.svg";
+import { useAuth } from '../firebase';
 
 const DATA = [
   {
@@ -26,7 +27,7 @@ const DATA = [
     activities: 'Healthy Recipe',
     id: '3',
     color: '#DE6BDC',
-    photo: <Three style={{height: 120, width: 120}}/>
+    photo: <Three style={{height: 120, width: 120, opacity: 1}}/>
   },
   {
     activities: 'Health Analysis',
@@ -49,7 +50,12 @@ const Item = ({item, onPress}) => (
 );
 
 const Home = (props) => {
-
+  const [url, setURL] = useState('');
+  const [name, setName] = useState('');
+  let currentUser = useAuth();
+  console.log("Rendered")
+  // console.log(currentUser)
+  // // console.log(currentUser.photoURL)
   const navigation = useNavigation();
   const handleSignOut = () => {
     fireAuth
@@ -59,7 +65,14 @@ const Home = (props) => {
       })
       .catch(error => alert(error.message))
   }
+    useFocusEffect(() => {
+      setURL(currentUser?.photoURL)
+      setName(currentUser?.displayName)
+    })
 
+    const goToProfile = () => {
+      navigation.navigate("Profile")
+    }
     return (
       
         <ScrollView style={styles.innerContainer}>
@@ -69,16 +82,17 @@ const Home = (props) => {
               <View style={styles.profile}>
               <View style={styles.pictureContainer}>
                 <View style={styles.innerRadius}>
+                 
                 <Image
                 style={styles.tinyLogo}
-                source={require('../assets/favicon.png')}
+                src={url}
                 />
                 </View>
               </View>
               <View style={styles.titleContainer}> 
-                  <Text style={styles.welcome}>Welcome Home, {props.name}</Text>
+                  <Text style={styles.welcome}>Welcome Home, {name}</Text>
               
-              <TouchableOpacity><Text style={{color: 'white',}}>Edit Profile</Text></TouchableOpacity>
+              <TouchableOpacity onPress={goToProfile}><Text style={{color: 'white'}}>Edit Profile</Text></TouchableOpacity>
               </View>
               </View>
               <TouchableOpacity style={styles.drawer} onPress={() => navigation.openDrawer()}>
@@ -88,7 +102,7 @@ const Home = (props) => {
           </View>
        
             <View style={styles.exploreContainer}>
-              <Text style={styles.exploreText}> Explore </Text>
+              <Text style={styles.exploreText}> EXPLORE </Text>
             </View>
             <View style={styles.bodyContainer}>
               <View style={styles.MenuContainer}>
@@ -125,7 +139,7 @@ const styles = StyleSheet.create({
       flex: 1,
       width: '100%',
       height: '100%',
-      backgroundColor: '#EEEEEE',
+      backgroundColor: '#FBFBFB',
   
     },
     welcome: {
@@ -135,8 +149,8 @@ const styles = StyleSheet.create({
     },
     curve: {
       zIndex: '-1',
-      backgroundColor: '#537188',
-      height: 123,
+      backgroundColor: '#212A3E',
+      height: 128,
       borderBottomEndRadius: 28,
       borderBottomLeftRadius: 28, 
       flex: 1,
@@ -161,11 +175,12 @@ const styles = StyleSheet.create({
       alignSelf: 'center'
     },
     tinyLogo: {
-      width: 50,
-      height: 50,
+      width: 60,
+      height: 60,
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      borderRadius: 35,
     },
     header: {
       display: 'flex',
@@ -178,6 +193,7 @@ const styles = StyleSheet.create({
     profile: {
       display: 'flex',
       flexDirection: 'row',
+      marginLeft: '1%',
     },
     pictureContainer: {
       borderColor: 'white',
@@ -196,14 +212,13 @@ const styles = StyleSheet.create({
       height: 72,
       width: 72,
       justifyContent: 'center',
-      alignItems: 'center' 
+      alignItems: 'center',
     },
     titleContainer: {
-      marginLeft: '2%',
+      marginLeft: '3%',
       justifyContent: 'center',
     }, 
     MenuContainer: {
-      marginTop: 20, 
       flexDirection:'row',
       flexWrap: 'wrap',
       width: '100%',
@@ -219,6 +234,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems:'center',
       height: '45%',
+      opacity: 0.95
     },
     exploreContainer: {
       display: 'flex',
@@ -228,9 +244,9 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     exploreText: {
-      fontFamily: 'FiraSans_600SemiBold_Italic',
+      fontFamily: 'PassionOne_700Bold',
       fontSize: 40,
-      textDecorationLine: 'underline',
+      // textDecorationLine: 'underline',
       color: '#0C134F'
     },
     bodyContainer: {

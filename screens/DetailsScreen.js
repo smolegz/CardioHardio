@@ -4,19 +4,27 @@ import { useNavigation } from '@react-navigation/native'
 import { db } from '../firebase'
 import {doc, updateDoc} from "firebase/firestore";
 import { userRefid } from './LoginScreen';
+import { useAuth, setupProfile } from '../firebase';
 
 const DetailsScreen = () => {
     const [name, setName] = useState('');
     const navigation = useNavigation();
-    
     const userRef = doc(db, "users", userRefid); 
+    const currentUser = useAuth();
 
     const handleName = () => {
-        
+
         const userData = async () => {
             const snap = await updateDoc(userRef, {name: name, id: userRefid});
+            return snap;
         }
-        userData().then(() => navigation.replace("Welcome Home"))
+        
+        
+        userData()
+        .then((snap) => {
+            setupProfile(currentUser, name, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png");
+            navigation.replace("Welcome Home");
+        })
        
     }
 

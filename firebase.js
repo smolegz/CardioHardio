@@ -1,8 +1,9 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { Auth, getAuth, initializeAuth } from 'firebase/auth';
+import { getAuth, initializeAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { getReactNativePersistence } from 'firebase/auth/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from 'react';
 
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -23,19 +24,34 @@ const firebaseConfig = {
 let firebaseApp;
 let fireAuth;
 if (getApps().length < 1) {
-  console.log("1")
   firebaseApp = initializeApp(firebaseConfig);
   fireAuth = initializeAuth(firebaseApp, {
     persistence: getReactNativePersistence(AsyncStorage),
   });
 } else {
-  console.log("2")
   firebaseApp = getApp();
   fireAuth = getAuth();
+}
+
+const useAuth = () => {
+  const [currentUser, setCurrentUser] = useState();
+
+  useEffect(() => {
+    setCurrentUser(fireAuth.currentUser);
+  }, [currentUser])
+
+  return currentUser;
+}
+
+const setupProfile = (user, name, photoURL) => {
+  updateProfile(user,{
+    displayName: name,
+    photoURL: photoURL
+  }).then(() => console.log("Updated Profile")).catch((error) => console.log("Failed to update profile"))
 }
 
 const db = getFirestore(firebaseApp);
 
 const colRef = collection(db, "users")
 
-export {fireAuth, db, colRef};
+export {fireAuth, db, colRef, useAuth, setupProfile};

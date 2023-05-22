@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import { addDoc, collection, onSnapshot, query, where, getDocs} from "firebase/firestore";
 import One from "../assets/one.svg";
 
-let userRefid = "0G27ViH7p4QumxaYkXRo";
+let userRefid;
 const LoginScreen = () => { 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -51,15 +51,11 @@ const LoginScreen = () => {
         signInWithEmailAndPassword(fireAuth, email, password)
         .then(userCredentials => {
 			const user = userCredentials.user;
-            console.log(user.email)
 			console.log("Logged in into: ", user.email);
             alert("Successful")
             const q = query(colRef, where("userEmail", "==", user.email))
             getQuery(q);
         })
-        .then(() => {
-            console.log("idd", userRefid)
-          })
 		.catch(error => alert(error.message))
     }
 
@@ -75,7 +71,7 @@ const LoginScreen = () => {
             <TextInput
                 placeholder = "Email"
                 value = { email }
-                onChangeText = {text => setEmail(text)}
+                onChangeText = {text => setEmail(text.trim())}
                 style= {styles.input}
             />
         
@@ -99,7 +95,7 @@ const LoginScreen = () => {
                 onPress= {handleSignUp}
                 style= {[styles.button, styles.buttonOutline]}
             >
-            <Text style={styles.buttonOutlineText}>Register</Text>
+                <Text style={styles.buttonOutlineText}>Register</Text>
             </TouchableOpacity>
         </View>
    </KeyboardAvoidingView>

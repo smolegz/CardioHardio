@@ -13,11 +13,11 @@ function MyDrawer() {
         screenOptions={{
             drawerPosition: 'right',
             swipeEnabled: 'true',
-            swipeEdgeWidth: 400,
-            swipeMinDistance: 50,
+            swipeEdgeWidth: 600,
+            swipeMinDistance: 10,
             drawerStyle: {
-            backgroundColor: '#ffffff',
-            width: 200,
+            backgroundColor: '#F9F9F9',
+            width: 220,
             },
             drawerLabelStyle: {
                 fontFamily: 'PassionOne_400Regular',
@@ -27,10 +27,11 @@ function MyDrawer() {
                 borderRadius: 15,
                 paddingLeft: 10,
             },
+            drawerInactiveTintColor: '#8EA7B9',
             drawerActiveTintColor: 'black',
             drawerType: 'back',
             drawerHideStatusBarOnOpen: true,
-            drawerActiveBackgroundColor: '#F0F0F0'
+            drawerActiveBackgroundColor: '#E9E9E9'
         }}>
       <Drawer.Screen name="Home" component={HomeScreen} options={{headerShown:false}} />
       <Drawer.Screen name="About Us" component={AboutScreen} options={{headerShown:false}}/>
