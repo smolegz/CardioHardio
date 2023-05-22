@@ -9,6 +9,7 @@ import ProfileScreen from './screens/ProfileScreen'
 import { useFonts, PassionOne_700Bold, PassionOne_900Black, PassionOne_400Regular } from '@expo-google-fonts/passion-one';
 import { FiraSans_400Regular_Italic, FiraSans_600SemiBold_Italic, FiraSans_300Light, FiraSans_700Bold } from '@expo-google-fonts/fira-sans';
 
+
 import MyDrawer from './components/MyDrawer';
 
 

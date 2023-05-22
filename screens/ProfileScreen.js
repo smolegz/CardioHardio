@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, StatusBar } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { useAuth } from '../firebase'
 import { useState, useEffect } from 'react'
@@ -6,7 +6,7 @@ import {updateEmail, updatePassword, updateProfile } from 'firebase/auth';
 import { updateDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase'
 import { userRefid } from './LoginScreen';
-
+import Back from '../assets/back.svg';
 
 //create a go back page. --navigates to homescreen.
 // save button --writes to firebase
@@ -38,23 +38,24 @@ const ProfileScreen = () => {
 
     //Changing in auth
     const onSave = async () => {
-        updateEmail(currentUser, email);
+        updateEmail(currentUser, email).catch((e) => console.log("Update email failed."));
         await updateProfile(currentUser, {
             displayName: name,
         })
 
-        updateDoc(userRef, {name: name, userEmail: email});
+        updateDoc(userRef, {name: name, userEmail: email}).catch((e) => connsole.log("Update doc failed"));
     
         if (password !== '') {
-            updatePassword(currentUser, password);
+            updatePassword(currentUser, password).catch((e) => console.log("Update password failed."));
         }
-
     }
     
     return (
         <View style={styles.container}>
+            <StatusBar barStyle="dark-content"/>
             <TouchableOpacity onPress={goBack} disabled={isSaving} style={styles.back}>
-                <Text style={{textAlign:'center', fontFamily: 'FiraSans_300Light', color: 'white'}}>Go Back</Text>
+                <Back width='16' height='16'/>
+                <Text style={{textAlign:'center', fontFamily: 'FiraSans_300Light', color: 'white', fontSize:'15'}}>Go Back</Text>
             </TouchableOpacity>
 
             <Text style={{fontFamily: 'FiraSans_700Bold', fontSize: 30, marginTop: 30, letterSpacing: 0.5}}>PROFILE</Text>
@@ -73,7 +74,7 @@ const ProfileScreen = () => {
                 )}
                 
                 <Text style={styles.label}>New Password (optional):</Text>
-                <TextInput style={[styles.input, isSaving ? styles.saving: null]} value={password} onChangeText={text => setPassword(text)} clearButtonMode='always' secureTextEntry='true' readOnly= {isSaving} />
+                <TextInput style={[styles.input, isSaving ? styles.saving: null]} value={password} onChangeText={text => setPassword(text)} clearButtonMode='always' secureTextEntry={true} readOnly= {isSaving} />
 
                 <Text style={styles.label}>Confirm Password:</Text>
                 <TextInput style={[styles.input, isSaving ? styles.saving: null]} value={confirmPassword} onChangeText={text => setConfirmPassword(text)} clearButtonMode='always' secureTextEntry={true} readOnly= {isSaving} />
@@ -128,8 +129,9 @@ const styles = StyleSheet.create({
     back:{
         borderWidth: 1,
         borderRadius: 20,
-        width: '20%',
+        width: '30%',
         padding: 10,
+        paddingLeft: 0,
         backgroundColor: '#212A3E',
         shadowColor: 'black',
         shadowOffset: {width: 2, height: 2},
@@ -137,6 +139,8 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         borderColor: 'grey',
         backgroundColor: '#212A3E',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
     },
     save: {
         marginTop: 60,

@@ -5,6 +5,7 @@ import { db } from '../firebase'
 import {doc, updateDoc} from "firebase/firestore";
 import { userRefid } from './LoginScreen';
 import { useAuth, setupProfile } from '../firebase';
+import Welcome from '../assets/welcome.svg'
 
 const DetailsScreen = () => {
     const [name, setName] = useState('');
@@ -29,9 +30,10 @@ const DetailsScreen = () => {
     }
 
     return (
-        <KeyboardAvoidingView style={styles.container}>
-            <Text style={styles.title}>Enter your name :</Text>
+        <KeyboardAvoidingView style={styles.container} behavior='padding'>
             <View style = {styles.inputContainer}>
+                <Welcome width='250' height='250'/>
+                <Text style={styles.title}>Enter your name :</Text>
                 <TextInput
                     placeholder = "Name"
                     value = { name }
@@ -64,16 +66,19 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'black'
+        backgroundColor: '#fffff',
     },
     title: {
         fontSize: 20,
+        fontFamily: 'FiraSans_300Light',
         marginBottom: 20,
         fontWeight: 400,
-        color: 'white',
+        color: '#212A3E',
     },
     inputContainer: {
         width: "70%",
+        justifyContent: 'center',
+        alignItems:'center',
     },
     input: {
         borderColor: 'black',
@@ -82,23 +87,28 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingTop: 10,
         paddingBottom: 10,
-        fontSize: 16,
+        fontSize: 16, 
+        width: '100%'  
     },
     buttonContainer: {
         marginTop: '10%',
         width: '40%',
     },
     button: {
-        backgroundColor: '#FF99FF',
+        backgroundColor: '#212A3E',
         width: '100%',
         marginBottom: 10,
         padding: 15,
         borderRadius: 30,
         alignItems: 'center',
+        shadowColor: 'black',
+        shadowOffset: {width: 2, height: 2},
+        shadowOpacity: 0.8,
     },
     buttonText: {
-        color: 'black',
+        color: 'white',
         fontWeight: '700',
         fontSize: 16,
+        fontFamily: 'FiraSans_400Regular_Italic'
     }
 })

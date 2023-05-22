@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, FlatList, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, StatusBar } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { fireAuth} from '../firebase'
@@ -74,33 +74,27 @@ const Home = (props) => {
       navigation.navigate("Profile")
     }
     return (
-      
-        <ScrollView style={styles.innerContainer}>
-
+        <View style={{width: '100%', flex: 1}}>
+          <StatusBar barStyle="light-content" backgroundColor="#ffffff" />
           <View style={styles.curve}>
             <View style={styles.header}>
               <View style={styles.profile}>
               <View style={styles.pictureContainer}>
                 <View style={styles.innerRadius}>
-                 
-                <Image
-                style={styles.tinyLogo}
-                src={url}
-                />
+                  <Image style={styles.tinyLogo} src={url}/>
                 </View>
               </View>
               <View style={styles.titleContainer}> 
-                  <Text style={styles.welcome}>Welcome Home, {name}</Text>
-              
-              <TouchableOpacity onPress={goToProfile}><Text style={{color: 'white'}}>Edit Profile</Text></TouchableOpacity>
+                <Text style={styles.welcome}>Welcome Home, {name}</Text>
+                <TouchableOpacity onPress={goToProfile}><Text style={{color: 'white'}}>Edit Profile</Text></TouchableOpacity>
               </View>
-              </View>
+            </View>
               <TouchableOpacity style={styles.drawer} onPress={() => navigation.openDrawer()}>
                   <Logo style={styles.svg}/>
               </TouchableOpacity>
             </View>
           </View>
-       
+        <ScrollView style={styles.innerContainer} showsVerticalScrollIndicator={false}>
             <View style={styles.exploreContainer}>
               <Text style={styles.exploreText}> EXPLORE </Text>
             </View>
@@ -128,7 +122,7 @@ const Home = (props) => {
               </TouchableOpacity>
           </View>
         </ScrollView>
-        
+        </View>
     )
 }
 
@@ -153,10 +147,10 @@ const styles = StyleSheet.create({
       height: 128,
       borderBottomEndRadius: 28,
       borderBottomLeftRadius: 28, 
-      flex: 1,
+      width: '100%',
     },
     svg: {
-      height: 20,
+      height: 20, 
       width: 20,
       position: 'fixed',
       margin: 10,
