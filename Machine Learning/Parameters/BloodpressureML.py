@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score
 
 # Data Collection and Processing
 # loading csv data
-bp_data = pd.read_csv('/Users/matchaboii/Desktop/Orbital/Data/RestingBP.csv')
+bp_data = pd.read_csv('/Users/matchaboii/PycharmProjects/CardioHardio/Machine Learning/Datasets/RestingBP.csv')
 
 bpX = bp_data.drop(columns='HeartDisease', axis=1)
 bpY = bp_data['HeartDisease']
