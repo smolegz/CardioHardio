@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from DataCollection import bpdata
 
 # Data Collection and Processing
 # loading csv data
@@ -28,17 +29,17 @@ model.fit(bpX_train, bpY_train)
 bpX_train_prediction = model.predict(bpX_train)
 training_data_accuracy = accuracy_score(bpX_train_prediction, bpY_train)
 
-print("Accuracy on Training data: ", training_data_accuracy)
+# print("Accuracy on Training data: ", training_data_accuracy)
 
 # accuracy on test data
 bpX_test_prediction = model.predict(bpX_test)
 test_data_accuracy = accuracy_score(bpX_test_prediction, bpY_test)
 
-print("Accuracy on Test data: ", test_data_accuracy)
+# print("Accuracy on Test data: ", test_data_accuracy)
 
 # Predictive System for Heart Disease
 # Age, Sex, RestingBP
-input_data = (49, 0, 160)
+input_data = bpdata
 
 # change input data to numpy array
 input_numpy = np.asarray(input_data)
@@ -46,9 +47,5 @@ input_numpy = np.asarray(input_data)
 # reshaping to predict only one
 input_reshape = input_numpy.reshape(1, -1)
 
-prediction = model.predict(input_reshape)
+bpPrediction = model.predict(input_reshape)
 
-if (prediction[0] == 0):
-    print("Heart Disease is NOT predicted")
-else:
-    print("Heart Disease predicted!")

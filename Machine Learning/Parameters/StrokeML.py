@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+from DataCollection import strokedata
 
 # Data Collection and Processing
 # loading csv data
@@ -30,17 +31,17 @@ model.fit(strokeX_train, strokeY_train)
 strokeX_train_prediction = model.predict(strokeX_train)
 training_data_accuracy = accuracy_score(strokeX_train_prediction, strokeY_train)
 
-print("Accuracy on Training data: ", training_data_accuracy)
+# print("Accuracy on Training data: ", training_data_accuracy)
 
 # accuracy on test data
 strokeX_test_prediction = model.predict(strokeX_test)
 test_data_accuracy = accuracy_score(strokeX_test_prediction, strokeY_test)
 
-print("Accuracy on Test data: ", test_data_accuracy)
+# print("Accuracy on Test data: ", test_data_accuracy)
 
 # Predictive System for Heart Disease
-# Age, Sex, RestingBP
-input_data = (20.34, 0, 0, 0,47)
+# BMI, smoking, alcohol, sex, age
+input_data = strokedata
 
 # change input data to numpy array
 input_numpy = np.asarray(input_data)
@@ -48,9 +49,5 @@ input_numpy = np.asarray(input_data)
 # reshaping to predict only one
 input_reshape = input_numpy.reshape(1, -1)
 
-prediction = model.predict(input_reshape)
+strokePrediction = model.predict(input_reshape)
 
-if (prediction[0] == 0):
-    print("Stroke is NOT predicted")
-else:
-    print("Stroke predicted!")
