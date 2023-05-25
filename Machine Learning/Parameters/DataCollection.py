@@ -1,5 +1,7 @@
 # Data collection
 import math
+import numpy as np
+from datetime import date
 
 gender_input = input("Enter your gender (Male/Female): ")
 age = int(input("Enter your age: "))
@@ -69,6 +71,7 @@ else:
     else:
         alcohol = 0
 
+alldata = [str(date.today()), age, gender, weight, height, smoke, alcohol, bloodpressure, exercise]
 heartdata = (BMI, smoke, alcohol, gender, age, exercise)
 bpdata = (age, gender, bloodpressure)
 strokedata = (BMI, smoke, alcohol, gender, age)
