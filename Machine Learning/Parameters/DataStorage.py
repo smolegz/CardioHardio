@@ -2,6 +2,8 @@ import math
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import numpy as np
+import matplotlib.pyplot as plt
 
 cred = credentials.Certificate("/Users/matchaboii/PycharmProjects/CardioHardio/Machine Learning/Parameters/orbitalhealthdata-firebase-adminsdk-zcm7g-e1bc3fc098.json")
 firebase_admin.initialize_app(cred)
@@ -14,7 +16,8 @@ while True:
     print("3: Delete data")
     print("4: Preview all data")
     print("5: BMI tracker")
-    print("6: Quit")
+    print("6: Blood Pressure tracker")
+    print("7: Quit")
     query = int(input("Enter: "))
 
     if query == 1:
@@ -81,8 +84,37 @@ while True:
         print("--End of data--")
     elif query == 5:
         # Get all BMI value from data base
-        print("BMI is")
+        collection_name = 'HealthData'
+        docs = firestore_db.collection(collection_name).get()
+        # x-axis
+        date_array = [doc.id for doc in docs]
+        # y-axis
+        bmi_array = [doc.get('BMI') for doc in docs]
+        # bar graph
+        plt.bar(date_array, bmi_array, tick_label = date_array,
+                width = 0.8, color = ['green'])
+        plt.xlabel('Date')
+        plt.ylabel('BMI')
+        plt.title('BMI tracker')
+        plt.show()
+
     elif query == 6:
+        # Get all BMI value from data base
+        collection_name = 'HealthData'
+        docs = firestore_db.collection(collection_name).get()
+        # x-axis
+        date_array = [doc.id for doc in docs]
+        # y-axis
+        bmi_array = [doc.get('BloodPressure') for doc in docs]
+        # bar graph
+        plt.bar(date_array, bmi_array, tick_label=date_array,
+                width=0.8, color=['green'])
+        plt.xlabel('Date')
+        plt.ylabel('BloodPressure')
+        plt.title('BloodPressure')
+        plt.show()
+
+    elif query == 7:
         break
 
 
