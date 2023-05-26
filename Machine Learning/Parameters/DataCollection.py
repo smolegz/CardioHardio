@@ -75,3 +75,17 @@ alldata = [str(date.today()), age, gender, weight, height, smoke, alcohol, blood
 heartdata = (BMI, smoke, alcohol, gender, age, exercise)
 bpdata = (age, gender, bloodpressure)
 strokedata = (BMI, smoke, alcohol, gender, age)
+
+from HeartdiseaseML import *
+from BloodpressureML import *
+from StrokeML import *
+
+if bpPrediction[0] == 0 and hdPrediction[0] == 0:
+    print("Heart Disease is NOT predicted")
+else:
+    print("Heart Disease predicted!")
+
+if strokePrediction[0] == 0:
+    print("Stroke is NOT predicted")
+else:
+    print("Stroke predicted!")
