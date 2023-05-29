@@ -9,6 +9,7 @@ import Three from "../assets/three.svg";
 import Four from "../assets/four.svg";
 import Five from "../assets/five.svg";
 import { useAuth } from '../firebase';
+import * as Updates from "expo-updates"
 
 const DATA = [
   {
@@ -50,12 +51,28 @@ const Item = ({item, onPress}) => (
 );
 
 const Home = (props) => {
+
   const [url, setURL] = useState('');
   const [name, setName] = useState('');
   let currentUser = useAuth();
 
   const navigation = useNavigation();
   
+  useEffect(() => {
+    reactToUpdates();
+  },[])
+
+  const reactToUpdates = async () => {
+      Updates.addListener((event) => {
+          if (event.type === Updates.UpdateEventType.UPDATE_AVAILABLE) {
+            alert("Update Available. Please Restart.");
+          }
+          if (event.type === Updates.UpdateEventType.NO_UPDATE_AVAILABLE) {
+            alert("NO Update Available.");
+          }
+      })
+  }
+
   const handleSignOut = () => {
     fireAuth
       .signOut()
