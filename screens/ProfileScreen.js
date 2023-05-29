@@ -38,13 +38,18 @@ const ProfileScreen = () => {
 
     //Changing in auth
     const onSave = async () => {
-        updateEmail(currentUser, email).catch((e) => console.log("Update email failed."));
+        //Update user email in Firebase Authentication.
+        updateEmail(currentUser, email).catch((e) => console.log("Update email failed.")); 
+
+        //Update user display name in Firebase Authentication.
         await updateProfile(currentUser, {
             displayName: name,
-        })
+        }).catch((e) => console.log("Update profile failed"))
 
-        updateDoc(userRef, {name: name, userEmail: email}).catch((e) => connsole.log("Update doc failed"));
-    
+        //Update user document in Firestore.
+        updateDoc(userRef, {name: name, userEmail: email}).catch((e) => console.log("Update doc failed"));
+
+        //Check if password needs to be edited in Firebase Authentication.
         if (password !== '') {
             updatePassword(currentUser, password).catch((e) => console.log("Update password failed."));
         }
@@ -55,7 +60,7 @@ const ProfileScreen = () => {
             <StatusBar barStyle="dark-content"/>
             <TouchableOpacity onPress={goBack} disabled={isSaving} style={styles.back}>
                 <Back width='16' height='16'/>
-                <Text style={{textAlign:'center', fontFamily: 'FiraSans_300Light', color: 'white', fontSize:'15'}}>Go Back</Text>
+                <Text style={{textAlign:'center', fontFamily: 'FiraSans_300Light', color: 'white', fontSize:15}}>Go Back</Text>
             </TouchableOpacity>
 
             <Text style={{fontFamily: 'FiraSans_700Bold', fontSize: 30, marginTop: 30, letterSpacing: 0.5}}>PROFILE</Text>
@@ -97,7 +102,7 @@ const ProfileScreen = () => {
                     onSave().then(() => navigation.navigate("Welcome Home"));
                 }
             }}>
-                <Text style={{textAlign:'center', fontFamily: 'FiraSans_300Light', color: 'white'}}>Save</Text>
+                <Text style={{textAlign:'center', fontFamily: 'FiraSans_300Light', color: 'white', fontSize: 15}}>Save</Text>
             </TouchableOpacity>
         </View>
     )
@@ -147,7 +152,8 @@ const styles = StyleSheet.create({
         borderWidth: 0.9,
         borderRadius: 20,
         marginLeft: '75%',
-        padding: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         width: '20%',
         shadowColor: 'black',
         shadowOffset: {width: 2, height: 2},

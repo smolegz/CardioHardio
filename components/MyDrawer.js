@@ -1,6 +1,8 @@
 import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import HomeScreen from '../screens/HomeScreen';
 import AboutScreen from '../screens/AboutScreen';
+import NotificationsScreen from '../screens/NotifScreen';
+import SupportScreen from '../screens/SupportScreen';
 import React from "react";
 
 
@@ -35,6 +37,8 @@ function MyDrawer() {
         }}>
       <Drawer.Screen name="Home" component={HomeScreen} options={{headerShown:false}} />
       <Drawer.Screen name="About Us" component={AboutScreen} options={{headerShown:false}}/>
+      <Drawer.Screen name="Notifications" component={NotificationsScreen} options={{headerShown:false}}/>
+      <Drawer.Screen name="Support" component={SupportScreen} options={{headerShown:false}}/>
     
     </Drawer.Navigator>
   );

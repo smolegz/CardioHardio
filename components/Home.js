@@ -53,10 +53,9 @@ const Home = (props) => {
   const [url, setURL] = useState('');
   const [name, setName] = useState('');
   let currentUser = useAuth();
-  console.log("Rendered")
-  // console.log(currentUser)
-  // // console.log(currentUser.photoURL)
+
   const navigation = useNavigation();
+  
   const handleSignOut = () => {
     fireAuth
       .signOut()
@@ -66,6 +65,7 @@ const Home = (props) => {
       .catch(error => alert(error.message))
   }
     useFocusEffect(() => {
+      console.log("Effect is running")
       setURL(currentUser?.photoURL)
       setName(currentUser?.displayName)
     })
@@ -73,6 +73,7 @@ const Home = (props) => {
     const goToProfile = () => {
       navigation.navigate("Profile")
     }
+
     return (
         <View style={{width: '100%', flex: 1}}>
           <StatusBar barStyle="light-content" backgroundColor="#ffffff" />

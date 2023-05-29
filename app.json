@@ -2,6 +2,7 @@
   "expo": {
     "name": "CardioHardio",
     "slug": "CardioHardio",
+    "owner": "ivan.koo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,23 +16,25 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-      
+      "supportsTablet": true,
+      "bundleIdentifier": "com.CardioHardio.CardioHardio"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
- 
-      }
+      },
+      "package": "com.CardioHardio"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
-    }, 
-    "plugins": [
-
-    ]
-    
+    },
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "075cc32b-fba1-4aa1-8390-7b879607e534"
+      }
+    }
   }
 }

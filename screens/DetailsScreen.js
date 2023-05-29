@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import React, {useState} from 'react'
 import { useNavigation } from '@react-navigation/native'
+import SelectDropdown from 'react-native-select-dropdown'
 import { db } from '../firebase'
 import {doc, updateDoc} from "firebase/firestore";
 import { userRefid } from './LoginScreen';
@@ -8,7 +9,13 @@ import { useAuth, setupProfile } from '../firebase';
 import Welcome from '../assets/welcome.svg'
 
 const DetailsScreen = () => {
+
+    const genderList = ["Male", "Female"]
+
     const [name, setName] = useState('');
+    const [age, setAge ] = useState();
+    const [gender, setGender] = useState();
+
     const navigation = useNavigation();
     const userRef = doc(db, "users", userRefid); 
     const currentUser = useAuth();
@@ -16,7 +23,7 @@ const DetailsScreen = () => {
     const handleName = () => {
 
         const userData = async () => {
-            const snap = await updateDoc(userRef, {name: name, id: userRefid});
+            const snap = await updateDoc(userRef, {name: name, id: userRefid, gender: gender, age: age});
             return snap;
         }
         
@@ -33,12 +40,29 @@ const DetailsScreen = () => {
         <KeyboardAvoidingView style={styles.container} behavior='padding'>
             <View style = {styles.inputContainer}>
                 <Welcome width='250' height='250'/>
-                <Text style={styles.title}>Enter your name :</Text>
+                <Text style={styles.title}>Display name :</Text>
                 <TextInput
                     placeholder = "Name"
                     value = { name }
                     onChangeText = {text => setName(text)}
                     style= {styles.input}
+                />
+                <Text style={styles.title}>Gender :</Text>
+                <SelectDropdown data={genderList} 
+                onSelect={(selectedItem, index) => {setGender(selectedItem)}}
+                buttonTextAfterSelection={(selectedItem, index) => selectedItem}
+                rowTextForSelection={(selectedItem, index) => selectedItem}
+                buttonStyle={styles.dropdown}
+                buttonTextStyle={styles.dropdownText}
+                dropdownStyle={styles.dropdownOption}
+                />
+                <Text style={styles.title}>Age :</Text>
+                <TextInput
+                    placeholder = "Age"
+                    value = { age }
+                    onChangeText = {text => setAge(text)}
+                    style= {styles.input}
+                    keyboardType='number-pad'
                 />
             </View>
             <View style={styles.buttonContainer}>
@@ -71,7 +95,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontFamily: 'FiraSans_300Light',
-        marginBottom: 20,
+        marginBottom: 15,
         fontWeight: 400,
         color: '#212A3E',
     },
@@ -81,14 +105,31 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     input: {
-        borderColor: 'black',
         backgroundColor: 'white',
         borderRadius: 20,
         paddingLeft: 20,
         paddingTop: 10,
         paddingBottom: 10,
         fontSize: 16, 
-        width: '100%'  
+        width: '100%',
+        marginBottom: 15,
+    },
+    dropdown: {
+        backgroundColor: 'white',
+        borderRadius: 20,
+        width: '100%',
+        height: 40,
+        marginBottom: 15,
+    },
+    dropdownText:{
+        fontSize: 16,
+        textAlign: 'left',
+        paddingLeft: 10,
+        marginHorizontal: 0,
+    },
+    dropdownOption:{
+      borderRadius: 10,
+      
     },
     buttonContainer: {
         marginTop: '10%',

@@ -13,7 +13,6 @@ const HomeScreen = () => {
   
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  console.log("HEREEEE")
   let q = query(colRef, where("id", "==", userRefid));
 
   useEffect(() => onSnapshot(q, (snapshot) => {
@@ -37,7 +36,6 @@ const HomeScreen = () => {
       }
     </View>
   )
-
 }
 
 export default HomeScreen

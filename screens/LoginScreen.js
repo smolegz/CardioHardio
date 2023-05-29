@@ -1,13 +1,15 @@
 import { useNavigation } from '@react-navigation/core'
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, Alert } from 'react-native'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { fireAuth, db, colRef } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, onSnapshot, query, where, getDocs} from "firebase/firestore";
 import One from "../assets/one.svg";
 
 let userRefid;
+
 const LoginScreen = () => { 
+
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
     const navigation = useNavigation();
@@ -15,16 +17,14 @@ const LoginScreen = () => {
     const createUserProfile = async (userAuth) => {
         if (!userAuth) return;
         const createdAt = new Date();
-
         const userRef = await addDoc(collection(db, "users"), {
             userEmail: email,
             createdAt: createdAt,
             name: null
         }).then((userRef) => {
         userRefid = userRef.id;
-        console.log("idzz",userRefid)})
-        navigation.replace("Details")
-       
+        console.log("id of: ",userRefid)})
+        navigation.replace("Details")   
     }
 
 	const handleSignUp = () => {
@@ -34,7 +34,6 @@ const LoginScreen = () => {
 			console.log("Successfully signed up: ", user.email);
             createUserProfile(userCredentials);
             alert("Successful");
-            
 		})
 		.catch(error => alert(error.message))
 	}
@@ -51,10 +50,10 @@ const LoginScreen = () => {
         signInWithEmailAndPassword(fireAuth, email, password)
         .then(userCredentials => {
 			const user = userCredentials.user;
-			console.log("Logged in into: ", user.email);
-            alert("Successful")
             const q = query(colRef, where("userEmail", "==", user.email))
             getQuery(q);
+            alert("Successful");
+            console.log("Logged in into: ", user.email);
         })
 		.catch(error => alert(error.message))
     }
@@ -71,13 +70,13 @@ const LoginScreen = () => {
             <TextInput
                 placeholder = "Email"
                 value = { email }
-                onChangeText = {text => setEmail(text.trim())}
+                onChangeText = {text => setEmail(text)}
                 style= {styles.input}
             />
         
             <TextInput
                 placeholder = "Password"
-                value = { password }
+                value = { password}
                 onChangeText = {text => setPassword(text)}
                 style= {styles.input}
                 secureTextEntry
@@ -102,7 +101,7 @@ const LoginScreen = () => {
   )
 }
 
-export {userRefid};
+export { userRefid };
 export default LoginScreen
 
 const styles = StyleSheet.create({
@@ -135,7 +134,6 @@ const styles = StyleSheet.create({
         marginTop: 0,
     },
     input: {
-        backgroundColor: 'white',
         paddingHorizontal: 15,
         paddingVertical: 15,
         borderRadius: 10,
@@ -149,7 +147,7 @@ const styles = StyleSheet.create({
         marginTop: 40,
     },
     button: {
-        backgroundColor: '#0782F9',
+        backgroundColor: '#212A3E',
         width: '100%',
         marginBottom: 10,
         padding: 15,
@@ -159,11 +157,11 @@ const styles = StyleSheet.create({
     buttonOutline: {
         backgroundColor: 'white',
         marginTop: 5,
-        borderColor: '#0782F9',
+        borderColor: '#212A3E',
         borderWidth: 2,
     },
     buttonOutlineText: {
-        color: '#0782F9',
+        color: '#212A3E',
         fontWeight: '700',
         fontSize: 16,
     },
