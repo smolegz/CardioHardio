@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { fireAuth, db, colRef } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, onSnapshot, query, where, getDocs} from "firebase/firestore";
@@ -10,7 +10,6 @@ let userRefid;
 
 const LoginScreen = () => { 
 
-    const [updateChecking, setUpdateChecking] = useState(false);
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
     const navigation = useNavigation();
@@ -154,6 +153,9 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 30,
         alignItems: 'center',
+        shadowColor: 'black',
+        shadowOffset: {width: 2, height: 2},
+        shadowOpacity: 0.8,
     },
     buttonOutline: {
         backgroundColor: 'white',

@@ -10,7 +10,7 @@ import Welcome from '../assets/welcome.svg'
 
 const DetailsScreen = () => {
 
-    const genderList = ["Male", "Female"]
+    const genderList = ["Male", "Female", "Ze/zir"]
 
     const [name, setName] = useState('');
     const [age, setAge ] = useState();
@@ -21,19 +21,15 @@ const DetailsScreen = () => {
     const currentUser = useAuth();
 
     const handleName = () => {
-
         const userData = async () => {
             const snap = await updateDoc(userRef, {name: name, id: userRefid, gender: gender, age: age});
             return snap;
         }
-        
-        
         userData()
         .then((snap) => {
             setupProfile(currentUser, name, "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png");
-            navigation.replace("Welcome Home");
+            navigation.replace("Slider");
         })
-       
     }
 
     return (
@@ -48,13 +44,15 @@ const DetailsScreen = () => {
                     style= {styles.input}
                 />
                 <Text style={styles.title}>Gender :</Text>
-                <SelectDropdown data={genderList} 
+                <SelectDropdown data={genderList}
+                defaultButtonText={'Select gender'}
                 onSelect={(selectedItem, index) => {setGender(selectedItem)}}
                 buttonTextAfterSelection={(selectedItem, index) => selectedItem}
                 rowTextForSelection={(selectedItem, index) => selectedItem}
                 buttonStyle={styles.dropdown}
                 buttonTextStyle={styles.dropdownText}
                 dropdownStyle={styles.dropdownOption}
+                dropdownOverlayColor='rgba(210, 210, 210, 0.2)'
                 />
                 <Text style={styles.title}>Age :</Text>
                 <TextInput
@@ -76,11 +74,6 @@ const DetailsScreen = () => {
         </KeyboardAvoidingView>
 
     )
-
-
-
-
-
 }
 
 export default DetailsScreen
