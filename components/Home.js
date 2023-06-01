@@ -3,11 +3,11 @@ import React, {useEffect, useState} from 'react'
 import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import { fireAuth} from '../firebase'
 import Logo from "../assets/drawer.svg";
-import One from "../assets/one.svg";
-import Two from "../assets/two.svg";
-import Three from "../assets/three.svg";
-import Four from "../assets/four.svg";
-import Five from "../assets/five.svg";
+import One from "../assets/Home/one.svg";
+import Two from "../assets/Home/two.svg";
+import Three from "../assets/Home/three.svg";
+import Four from "../assets/Home/four.svg";
+import Five from "../assets/Home/five.svg";
 import { useAuth } from '../firebase';
 import * as Updates from "expo-updates"
 
