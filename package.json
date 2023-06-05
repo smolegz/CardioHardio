@@ -6,6 +6,8 @@
     "@tensorflow/tfjs": "^4.6.0",
     "@tensorflow/tfjs-node": "^4.6.0",
     "csv": "^6.3.1",
-    "csv-parser": "^3.0.0"
+    "csv-parser": "^3.0.0",
+    "firebase": "^9.22.1",
+    "firebase-admin": "^11.9.0"
   }
 }
