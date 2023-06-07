@@ -17,38 +17,39 @@ admin.initializeApp({
 const db = getFirestore();
 
 // Ask for input
-async function promptInput() {
+async function promptInput(question) {
     const readline = require('node:readline');
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout,
     });
 
-    rl.question('Enter weight: ', (weight) => {
-        rl.question('Enter height: ', (height) => {
-            rl.question('Do you smoke? ', (smoking) => {
-                rl.question('Do you consume alcohol? ', (alcohol) => {
-                    rl.question('What is your gender? ', (gender) => {
-                        rl.question('Enter your age: ', (age) => {
-                            rl.question('How much do you exercise today? ', (activity) => {
-                                const userData = {
-                                    bmi: Number(weight / Math.pow(height/100,2)),
-                                    smoking: Number(smoking),
-                                    alcohol: Number(alcohol),
-                                    gender: Number(gender),
-                                    age: Number(age),
-                                    activity: Number(activity),
-                                };
-                                addDataToFirebase(userData);
-
-                                rl.close();
-                            });
-                        });
-                    });
-                });
-            });
+    return new Promise((resolve, reject) => {
+        rl.question(question, (input) => {
+            resolve(input);
+            rl.close();
         });
     });
+}
+
+async function getUserInput() {
+    const weight = await promptInput('Enter weight: ');
+    const height = await promptInput('Enter height: ');
+    const smoke = await promptInput('Do you smoke? ');
+    const alcohol = await promptInput('Do you drink alcohol? ');
+    const gender = await promptInput('What is your gender? ');
+    const age = await promptInput('Enter age: ');
+    const exercise = await promptInput('Do you exercise? ');
+
+    const userData = {
+        bmi: Number(weight / Math.pow(height/100,2)),
+        smoking: Number(smoke),
+        alcohol: Number(alcohol),
+        gender: Number(gender),
+        age: Number(age),
+        activity: Number(exercise),
+    };
+    addDataToFirebase(userData);
 }
 
 // Add data to firebase
@@ -70,7 +71,6 @@ async function getData() {
         if (docSnapshot.exists) {
             const docFields = docSnapshot.data();
             const fieldsArr = Object.values(docFields);
-
             return fieldsArr;
         } else {
             console.log('Doc not found');
@@ -105,66 +105,74 @@ function convertToTensors(data) {
 
     data.forEach((row) => {
         features.push([
-            Number(row.PhysicalActivity),
-            Number(row.Age),
             Number(row.AlcoholDrinking),
-            Number(row.BMI),
             Number(row.Sex),
+            Number(row.PhysicalActivity),
             Number(row.Smoking),
+            Number(row.Age),
+            Number(row.BMI),
         ]);
         labels.push(Number(row.HeartDisease));
     });
 
     const featureTensor = tf.tensor2d(features);
-    const labelTensor = tf.tensor1d(labels);
+    const labelTensor = tf.oneHot(labels, 2);
     return {features: featureTensor, labels: labelTensor};
-}
-
-// Normalise features
-function normaliseData(data) {
-    const featureTensor = data.features;
-    const labelTensor = data.labels;
-
-    const { mean, variance } = tf.moments(featureTensor, 0);
-    const normalisedFeatures = featureTensor.sub(mean).div(variance.sqrt());
-
-    return { features: normalisedFeatures, labels: labelTensor};
 }
 
 // Logistic Regression
 async function performLogisticRegresion(filePath) {
+    await getUserInput();
+
     const rawData = await loadCSV(filePath);
     const data = convertToTensors(rawData);
-    const normalisedData = normaliseData(data);
 
+    // Normalise Data
+    const featureTensor = data.features;
+    const labels = data.labels;
+    const { mean, variance } = tf.moments(featureTensor, 0);
+    const features = featureTensor.sub(mean).div(variance.sqrt());
+
+    // Machine Learning
     const model = tf.sequential();
+
+    // Sigmoid for binary result
     model.add(tf.layers.dense( {
-        units:1,
+        units:2,
         inputShape: [6],
         activation: 'sigmoid'
     }));
+
     model.compile({
-        optimizer: tf.train.adam(),
+        optimizer: tf.train.adam(0.1),
         loss: 'binaryCrossentropy',
         metrics: ['accuracy']
     });
 
-    const { features, labels } = normalisedData;
-    await model.fit(features, labels, {epochs: 1, shuffle: true});
+    await model.fit(features, labels, {
+        epochs: 2, 
+        batchSize: 32, 
+        shuffle: true,
+    });
     
-    // Bug: getData and promptInput running async
-    await promptInput();
-    await getData();
     //Model testing
-    // Input: Activity, age, alcohol, BMI, sex, smoking
     const fieldsArr = getData();
     fieldsArr.then(function(arr) {
-        const testInput = tf.tensor2d([arr]);
-        const prediction = model.predict(testInput);
-        const predictedValue = prediction.round().dataSync()[0];
+        const dataFetch = tf.tensor2d([arr]);
 
-        console.log('Stroke:', predictedValue);
-    })
+        // Normalise User Data
+        const testData = dataFetch.sub(mean).div(variance.sqrt());
+        
+        const prediction = model.predict(testData);
+        const predictedArray = prediction.arraySync();
+        const result = predictedArray.map((prediction) => (prediction[0] < 0.8 ? 1 : 0));
+        
+        if (result[0] == 0) {
+            console.log('Heart Disease not predicted');
+        } else {
+            console.log('Heart Disease predicted');
+        };
+    });
 }
 
 const filePath = '/Users/matchaboii/CardioHardio/MachineLearning/Datasets/HealthData.csv';
