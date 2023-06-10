@@ -85,6 +85,8 @@ const Home = (props) => {
       console.log("Effect is running")
       setURL(currentUser?.photoURL)
       setName(currentUser?.displayName)
+      console.log(name);
+      console.log(url);
     })
 
     const goToProfile = () => {
@@ -99,6 +101,7 @@ const Home = (props) => {
               <View style={styles.profile}>
               <View style={styles.pictureContainer}>
                 <View style={styles.innerRadius}>
+             
                   <Image style={styles.tinyLogo} src={url}/>
                 </View>
               </View>

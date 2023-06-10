@@ -33,7 +33,15 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": [],
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends.",
+          "cameraPermission": "Allow CardioHardio to access your camera."
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "075cc32b-fba1-4aa1-8390-7b879607e534"

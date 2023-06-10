@@ -3,6 +3,7 @@ import { getAuth, initializeAuth, onAuthStateChanged, updateProfile } from 'fire
 import { getReactNativePersistence } from 'firebase/auth/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getStorage} from 'firebase/storage';
 import { useEffect, useState } from 'react';
 
 
@@ -52,6 +53,8 @@ const setupProfile = (user, name, photoURL) => {
 
 const db = getFirestore(firebaseApp);
 
-const colRef = collection(db, "users")
+const colRef = collection(db, "users");
+
+const storage = getStorage(firebaseApp);
 
 export {fireAuth, db, colRef, useAuth, setupProfile};

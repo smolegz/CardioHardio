@@ -1107,10 +1107,10 @@
     mv "~2"
     safe-json-stringify "~1"
 
-"@expo/cli@0.7.1":
-  version "0.7.1"
-  resolved "https://registry.npmjs.org/@expo/cli/-/cli-0.7.1.tgz"
-  integrity sha512-414sC4phJA5p96+bgPsyaPNwsepcOsGeErxFXp9OhqwgiQpw+H0uN9mVrvNIKLDHMVWHrW9bAFUEcpoL6VkzbQ==
+"@expo/cli@0.7.3":
+  version "0.7.3"
+  resolved "https://registry.npmjs.org/@expo/cli/-/cli-0.7.3.tgz"
+  integrity sha512-uMGHbAhApqXR2sd1KPhgvpbOhBBnspad8msEqHleT2PHXwKIwTUDzBGO9+jdOAWwCx2MJfw3+asYjzoD3DN9Bg==
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/code-signing-certificates" "0.0.5"
@@ -1229,24 +1229,7 @@
   resolved "https://registry.npmjs.org/@expo/config-types/-/config-types-48.0.0.tgz"
   integrity sha512-DwyV4jTy/+cLzXGAo1xftS6mVlSiLIWZjl9DjTCLPFVgNYQxnh7htPilRv4rBhiNs7KaznWqKU70+4zQoKVT9A==
 
-"@expo/config@~8.0.0":
-  version "8.0.2"
-  resolved "https://registry.npmjs.org/@expo/config/-/config-8.0.2.tgz"
-  integrity sha512-WubrzTNNdAXy1FU8TdyQ7D9YtDj2tN3fWXDq+C8In+nB7Qc08zwH9cVdaGZ+rBVmjFZBh5ACfObKq/m9cm4QQA==
-  dependencies:
-    "@babel/code-frame" "~7.10.4"
-    "@expo/config-plugins" "~6.0.0"
-    "@expo/config-types" "^48.0.0"
-    "@expo/json-file" "^8.2.37"
-    getenv "^1.0.0"
-    glob "7.1.6"
-    require-from-string "^2.0.2"
-    resolve-from "^5.0.0"
-    semver "7.3.2"
-    slugify "^1.3.4"
-    sucrase "^3.20.0"
-
-"@expo/config@8.0.2":
+"@expo/config@~8.0.0", "@expo/config@8.0.2":
   version "8.0.2"
   resolved "https://registry.npmjs.org/@expo/config/-/config-8.0.2.tgz"
   integrity sha512-WubrzTNNdAXy1FU8TdyQ7D9YtDj2tN3fWXDq+C8In+nB7Qc08zwH9cVdaGZ+rBVmjFZBh5ACfObKq/m9cm4QQA==
@@ -4032,6 +4015,18 @@ expo-font@~11.1.1:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-loader@~4.1.0:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/expo-image-loader/-/expo-image-loader-4.1.1.tgz"
+  integrity sha512-ciEHVokU0f6w0eTxdRxLCio6tskMsjxWIoV92+/ZD37qePUJYMfEphPhu1sruyvMBNR8/j5iyOvPFVGTfO8oxA==
+
+expo-image-picker@~14.1.1:
+  version "14.1.1"
+  resolved "https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-14.1.1.tgz"
+  integrity sha512-SvWtnkLW7jp5Ntvk3lVcRQmhFYja8psmiR7O6P/+7S6f4llt3vaFwb4I3+pUXqJxxpi7BHc2+95qOLf0SFOIag==
+  dependencies:
+    expo-image-loader "~4.1.0"
+
 expo-json-utils@~0.5.0:
   version "0.5.1"
   resolved "https://registry.npmjs.org/expo-json-utils/-/expo-json-utils-0.5.1.tgz"
@@ -4108,13 +4103,13 @@ expo-updates@~0.16.4:
     fbemitter "^3.0.0"
     resolve-from "^5.0.0"
 
-expo@*, expo@^48.0.15:
-  version "48.0.17"
-  resolved "https://registry.npmjs.org/expo/-/expo-48.0.17.tgz"
-  integrity sha512-5T1CsMUlfI+xFB89GOU+/xtSSbSBBFVTqwgheAU0cQolfbs+YyJCMTKU5vN45N5OK+ym7p/LKPa6DQAxYPF8YQ==
+expo@*, expo@^48.0.19:
+  version "48.0.19"
+  resolved "https://registry.npmjs.org/expo/-/expo-48.0.19.tgz"
+  integrity sha512-Pmz2HEwcDdjWPq5fM3vF++je0hjZIBX9aTZEkm6sBv09Vfhe4+CuiuKDq3iE+N6G9l2+eFYoRCApDwLqcRMiPA==
   dependencies:
     "@babel/runtime" "^7.20.0"
-    "@expo/cli" "0.7.1"
+    "@expo/cli" "0.7.3"
     "@expo/config" "8.0.2"
     "@expo/config-plugins" "6.0.2"
     "@expo/vector-icons" "^13.0.0"
@@ -5951,10 +5946,10 @@ minipass-pipeline@^1.2.2:
   dependencies:
     minipass "^3.0.0"
 
-minipass@^3.0.0, minipass@^3.1.1:
-  version "3.3.6"
-  resolved "https://registry.npmjs.org/minipass/-/minipass-3.3.6.tgz"
-  integrity sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw==
+minipass@^3.0.0, minipass@^3.1.1, minipass@3.1.6:
+  version "3.1.6"
+  resolved "https://registry.npmjs.org/minipass/-/minipass-3.1.6.tgz"
+  integrity sha512-rty5kpw9/z8SX9dmxblFA6edItUmwJgMeYDZRrwlIVN27i8gysGbznJwUggw2V/FVqFSDdWy040ZPS811DYAqQ==
   dependencies:
     yallist "^4.0.0"
 
@@ -5962,13 +5957,6 @@ minipass@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/minipass/-/minipass-5.0.0.tgz"
   integrity sha512-3FnjYuehv9k6ovOEbyOswadCDPX1piCfhV8ncmYtHOjuPwylVWsghTLo7rabjC3Rx5xD4HDx8Wm1xnMF7S5qFQ==
-
-minipass@3.1.6:
-  version "3.1.6"
-  resolved "https://registry.npmjs.org/minipass/-/minipass-3.1.6.tgz"
-  integrity sha512-rty5kpw9/z8SX9dmxblFA6edItUmwJgMeYDZRrwlIVN27i8gysGbznJwUggw2V/FVqFSDdWy040ZPS811DYAqQ==
-  dependencies:
-    yallist "^4.0.0"
 
 minizlib@^2.1.1:
   version "2.1.2"
@@ -6787,6 +6775,11 @@ react-native-gradle-plugin@^0.71.18:
   resolved "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.18.tgz"
   integrity sha512-7F6bD7B8Xsn3JllxcwHhFcsl9aHIig47+3eN4IHFNqfLhZr++3ElDrcqfMzugM+niWbaMi7bJ0kAkAL8eCpdWg==
 
+react-native-image-picker@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-5.4.0.tgz"
+  integrity sha512-qtLroIqpHADaR0/XJBD7E0boq+AAVT6wXvY4+pzrHjx12Lx2BhpFZH0rlWc/HIqeWBhZckAIpZ0ndapiGEMdYg==
+
 "react-native-reanimated@>= 1.0.0", react-native-reanimated@~2.14.4:
   version "2.14.4"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.14.4.tgz"
@@ -6834,6 +6827,11 @@ react-native-svg@>=12.0.0, react-native-svg@13.4.0:
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"
+
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/react-native-uuid/-/react-native-uuid-2.0.1.tgz"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
 
 react-native-web@~0.18.10:
   version "0.18.12"

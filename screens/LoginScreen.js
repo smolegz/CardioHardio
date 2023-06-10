@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { fireAuth, db, colRef } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, onSnapshot, query, where, getDocs} from "firebase/firestore";
-import One from "../assets/one.svg";
+import One from "../assets/Home/one.svg";
 
 let userRefid;
 
