@@ -1,13 +1,8 @@
 {
-  "name": "cardiohardio",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
-  },
+  "name": "CardioHardio",
+  "packageManager": "yarn@4.0.0-rc.44",
   "dependencies": {
+<<<<<<< HEAD
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@expo-google-fonts/fira-sans": "^0.2.3",
     "@expo-google-fonts/passion-one": "^0.2.3",
@@ -44,4 +39,14 @@
     "babel-preset-expo": "^9.2.0"
   },
   "private": true
+=======
+    "@tensorflow-models/knn-classifier": "^1.2.4",
+    "@tensorflow/tfjs": "^4.6.0",
+    "@tensorflow/tfjs-node": "^4.6.0",
+    "csv": "^6.3.1",
+    "csv-parser": "^3.0.0",
+    "firebase": "^9.22.1",
+    "firebase-admin": "^11.9.0"
+  }
+>>>>>>> 5ea5875f0e5b6715b79ada095675398c066798a3
 }
