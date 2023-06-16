@@ -74,19 +74,11 @@ export async function logisticRegression(dateQueried) {
 
 async function getDataForLR(dateQueried) {
     try {
-        // Initalise Server
-        // var admin = require("firebase-admin");
-        // var serviceAccount = require("/Users/matchaboii/CardioHardio/serviceAccountKey.json");
 
         admin.initializeApp({
             credential: admin.credential.cert(serviceAccount),
             databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
         });
-
-        // admin.initializeApp({
-        //     credential: admin.credential.cert(serviceAccount),
-        //     databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
-        // });
 
         const db = getFirestore();
         const docRef = db.collection('UserData').doc(dateQueried);
