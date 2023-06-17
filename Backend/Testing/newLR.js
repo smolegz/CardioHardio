@@ -9,6 +9,7 @@ export async function logisticRegression(dateQueried) {
   const userData = await getDataForLR(dateQueried);
 
   // load CSV file
+  // previously the link provided doesnt work, so I change to this link instead.
   const filePath =
     "https://firebasestorage.googleapis.com/v0/b/cardiohardio-6dbc7.appspot.com/o/HealthData.csv?alt=media&token=ef919b29-bb80-4f57-b3d8-21c81bd09b82";
 
@@ -34,9 +35,11 @@ export async function logisticRegression(dateQueried) {
     parseFloat(row.BMI),
   ]);
 
+  //console.log(features)
+
   const labels = csvData.map((row) => row.HeartDisease);
   console.log("3");
-  const featureTensor = tf.tensor2d(features);
+  const featureTensor = tf.tensor2d(features); // Crashes at here
   console.log("4");
   const labelTensor = tf.oneHot(labels, 2);
 
