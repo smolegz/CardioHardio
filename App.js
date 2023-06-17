@@ -1,19 +1,28 @@
-import 'react-native-gesture-handler';
-import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from './screens/LoginScreen';
-import DetailsScreen from './screens/DetailsScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import Slider from './components/Slider';
-import { useFonts, PassionOne_700Bold, PassionOne_900Black, PassionOne_400Regular } from '@expo-google-fonts/passion-one';
-import { FiraSans_400Regular_Italic, FiraSans_600SemiBold_Italic, FiraSans_300Light, FiraSans_700Bold } from '@expo-google-fonts/fira-sans';
-import MyDrawer from './components/MyDrawer';
-
+import "react-native-gesture-handler";
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LoginScreen from "./screens/LoginScreen";
+import DetailsScreen from "./screens/DetailsScreen";
+import ProfileScreen from "./screens/ProfileScreen";
+import Slider from "./components/Slider";
+import {
+  useFonts,
+  PassionOne_700Bold,
+  PassionOne_900Black,
+  PassionOne_400Regular,
+} from "@expo-google-fonts/passion-one";
+import {
+  FiraSans_400Regular_Italic,
+  FiraSans_600SemiBold_Italic,
+  FiraSans_300Light,
+  FiraSans_700Bold,
+} from "@expo-google-fonts/fira-sans";
+import MyDrawer from "./components/MyDrawer";
+import HealthAnalysisScreen from "./screens/HealthAnalysisScreen";
 
 const Stack = createNativeStackNavigator();
-
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -26,35 +35,59 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-  return null;
+    return null;
   }
   return (
     <NavigationContainer>
-      
       <Stack.Navigator>
-        <Stack.Screen options={ {headerShown: false}} name="Login" component={LoginScreen} />
-        <Stack.Screen options={ {headerShown: false}} name="Details" component={DetailsScreen} />
-        <Stack.Screen options={ {headerShown: false}} name="Slider" component={Slider} />
-        <Stack.Screen name="Welcome Home" options={ {headerShown: false}} component={MyDrawer} />
-        <Stack.Screen name="Profile" options={ {headerShown: false}} component={ProfileScreen} />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Details"
+          component={DetailsScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Slider"
+          component={Slider}
+        />
+        <Stack.Screen
+          name="Welcome Home"
+          options={{ headerShown: false }}
+          component={MyDrawer}
+        />
+        <Stack.Screen
+          name="Profile"
+          options={{ headerShown: false }}
+          component={ProfileScreen}
+        />
+        <Stack.Screen
+          name="Analysis"
+          options={{ headerShown: false }}
+          component={HealthAnalysisScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     paddingTop: 40,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
     // alignItems: 'center',
     // justifyContent: 'center',
   },
   item: {
     marginTop: 24,
-    backgroundColor: 'pink',
-    padding: 30 ,
-    fontSize:24,
+    backgroundColor: "pink",
+    padding: 30,
+    fontSize: 24,
   },
 });

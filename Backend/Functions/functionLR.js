@@ -7,7 +7,7 @@ const { getFirestore } = require('firebase-admin/firestore');
 async function logisticRegression(dateQueried) {
     // Initalise Server
     var admin = require("firebase-admin");
-    var serviceAccount = require("/Users/matchaboii/CardioHardio/serviceAccountKey.json");
+    var serviceAccount = require("../../serviceAccountKey.json");
 
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
@@ -22,7 +22,7 @@ async function logisticRegression(dateQueried) {
     // Load CSV file
     const dataset = [];
     const data = await new Promise((resolve, reject) => {
-        fs.createReadStream('/Users/matchaboii/CardioHardio/Backend/Functions/HealthData.csv')
+        fs.createReadStream('../Datasets/HealthData.csv')
             .pipe(csv())
             .on('data', (data) => dataset.push(data))
             .on('end', () => {
@@ -106,4 +106,6 @@ async function getDataForLR(dateQueried) {
     }
 } 
 
-module.exports = { logisticRegression };
+// module.exports = { logisticRegression };
+
+export {logisticRegression};
