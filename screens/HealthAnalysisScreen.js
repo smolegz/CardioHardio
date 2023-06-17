@@ -8,7 +8,7 @@ const HealthAnalysisScreen = () => {
   const navigation = useNavigation();
 
   const calculate = async () => {
-    await logisticRegression("2023-06-07");
+    await logisticRegression("2023-06-08");
   };
 
   return (

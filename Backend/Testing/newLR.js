@@ -1,6 +1,7 @@
 import * as tf from "@tensorflow/tfjs";
 import Papa from "papaparse";
-import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 // Logistic Regression Function
 export async function logisticRegression(dateQueried) {
@@ -9,7 +10,7 @@ export async function logisticRegression(dateQueried) {
 
   // load CSV file
   const filePath =
-    "https://github.com/smolegz/CardioHardio/blob/main/Backend/Datasets/HealthData.csv";
+    "https://firebasestorage.googleapis.com/v0/b/cardiohardio-6dbc7.appspot.com/o/HealthData.csv?alt=media&token=ef919b29-bb80-4f57-b3d8-21c81bd09b82";
 
   // parse CSV
   const parseCSV = async () => {
@@ -19,10 +20,11 @@ export async function logisticRegression(dateQueried) {
 
     const { data } = Papa.parse(csvData, { header: true });
     console.log("Done");
-    data.map;
+    return data;
   };
 
   const csvData = await parseCSV();
+
   const features = csvData.map((row) => [
     parseInt(row.AlcoholDrinking),
     parseInt(row.Sex),
@@ -33,7 +35,9 @@ export async function logisticRegression(dateQueried) {
   ]);
 
   const labels = csvData.map((row) => row.HeartDisease);
+  console.log("3");
   const featureTensor = tf.tensor2d(features);
+  console.log("4");
   const labelTensor = tf.oneHot(labels, 2);
 
   // Normalise Data
@@ -75,17 +79,19 @@ export async function logisticRegression(dateQueried) {
 
 async function getDataForLR(dateQueried) {
   try {
-    const db = getFirestore();
-    const docRef = db.collection("UserData").doc(dateQueried);
-    const docSnapshot = await docRef.get();
+    console.log("1");
+    const docRef = doc(db, "UserData", dateQueried);
+    console.log("2");
+    const docSnapshot = await getDoc(docRef);
 
     if (docSnapshot.exists) {
+      console.log("Doc exists");
       const docFields = docSnapshot.data();
       const { alcohol, gender, activity, smoking, age, weight, height } =
         docFields;
       const BMI = weight / Math.pow(height / 100, 2);
       const fieldsArr = [alcohol, gender, activity, smoking, age, BMI];
-
+      console.log("Fields ARRAY:", fieldsArr);
       return fieldsArr;
     } else {
       console.log("Doc not found");
@@ -93,8 +99,6 @@ async function getDataForLR(dateQueried) {
     }
   } catch (error) {
     console.error("Cannot obtain data", error);
-  } finally {
-    console.log("Success");
   }
 }
 
