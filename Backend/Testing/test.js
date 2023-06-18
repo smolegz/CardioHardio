@@ -1,4 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
+import * as sk from "scikitjs";
 import Papa from "papaparse";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -37,59 +38,30 @@ export async function logisticRegression(dateQueried) {
 
   //console.log(features)
 
-  const labels = csvData.map((row) => parseInt(row.HeartDisease));
+  const labels = csvData.map((row) => row.HeartDisease);
   console.log("3");
-  const featureTensor = tf.tensor2d(features); // Crashes at here
+  sk.setBackend(tf);
   console.log("4");
-  const labelTensor = tf.oneHot(labels);
-
-  // Normalise Data
-  // console.log("5");
-  // const { mean, variance } = tf.moments(featureTensor, 0);
-  // console.log("6");
-  // const featuresTest = featureTensor.sub(mean).div(variance.sqrt());
+  
+  const splitIndex = Math.floor(features.length * 0.8);
+  console.log(features.length);
+  const trainFeatures = features.slice(0, splitIndex);
+  console.log("6");
+  const trainLabels = labels.slice(0, splitIndex);
   console.log("7");
-
-
-  // Machine Learning
-  const model = tf.sequential();
+  const testFeatures = features.slice(splitIndex);
   console.log("8");
-  model.add(
-    tf.layers.dense({
-      units: 2,
-      inputShape: [6],
-      activation: "sigmoid",
-    })
-  );
+  const testLabels = labels.slice(splitIndex);
   console.log("9");
-  model.compile({
-    optimizer: tf.train.adam(0.1),
-    loss: "binaryCrossentropy",
-    metrics: ["accuracy"],
-  });
+  
+  const model = new sk.LinearRegression({ fitIntercept: false });
   console.log("10");
-  model.fit(featureTensor, labelTensor, {
-    epochs: 1,
-    batchSize: 64,
-    shuffle: true,
-  });
+  await model.fit([[1], [2]], [10, 20]);
   console.log("11");
 
-
-  // Prediction using userData
-  const dataPredict = tf.tensor2d([userData]);
+  const predictions = model.predict(testFeatures);
   console.log("12");
-  // const normalisePredict = dataPredict.sub(mean).div(variance.sqrt());
-  const prediction = model.predict(dataPredict);
-  console.log("13");
-  const predictedArray = prediction.arraySync();
-  console.log("14");
-
-  if (predictedArray[0] < 0.8) {
-    console.log("Heart Disease predicted");
-  } else {
-    console.log("Heart Disease not predicted");
-  }
+  console.log("5", predictions);
 }
 
 async function getDataForLR(dateQueried) {

@@ -17,7 +17,7 @@
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@tensorflow-models/knn-classifier": "^1.2.4",
-    "@tensorflow/tfjs": "^4.6.0",
+    "@tensorflow/tfjs": "^3.17.0",
     "@tensorflow/tfjs-node": "^4.6.0",
     "csv": "^6.3.1",
     "csv-parser": "^3.0.0",
@@ -44,7 +44,8 @@
     "react-native-svg": "13.4.0",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-uuid": "^2.0.1",
-    "react-native-web": "~0.18.10"
+    "react-native-web": "~0.18.10",
+    "scikitjs": "^1.24.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
