@@ -9,9 +9,9 @@ export async function logisticRegression(dateQueried) {
   const userData = await getDataForLR(dateQueried);
 
   // load CSV file
-  // previously the link provided doesnt work, so I change to this link instead.
+  // previously the link provided doesnt work - shows everything as NaN, so I've changed to this link instead.
   const filePath =
-    "https://firebasestorage.googleapis.com/v0/b/cardiohardio-6dbc7.appspot.com/o/HealthData.csv?alt=media&token=ef919b29-bb80-4f57-b3d8-21c81bd09b82";
+    "https://firebasestorage.googleapis.com/v0/b/cardiohardio-6dbc7.appspot.com/o/HealthDataTest.csv?alt=media&token=576723b8-24fb-4840-ba3f-ffff7d817317";
 
   // parse CSV
   const parseCSV = async () => {
@@ -35,49 +35,49 @@ export async function logisticRegression(dateQueried) {
     parseFloat(row.BMI),
   ]);
 
-  //console.log(features)
+  console.log(features);
 
   const labels = csvData.map((row) => row.HeartDisease);
   console.log("3");
   const featureTensor = tf.tensor2d(features); // Crashes at here
-  console.log("4");
-  const labelTensor = tf.oneHot(labels, 2);
+  // console.log("4");
+  // const labelTensor = tf.oneHot(labels, 2);
 
-  // Normalise Data
-  const { mean, variance } = tf.moments(featureTensor, 0);
-  const featuresTest = featureTensor.sub(mean).div(variance.sqrt());
+  // // Normalise Data
+  // const { mean, variance } = tf.moments(featureTensor, 0);
+  // const featuresTest = featureTensor.sub(mean).div(variance.sqrt());
 
-  // Machine Learning
-  const model = tf.sequential();
-  model.add(
-    tf.layers.dense({
-      units: 2,
-      inputShape: [6],
-      activation: "sigmoid",
-    })
-  );
-  model.compile({
-    optimizer: tf.train.adam(0.1),
-    loss: "binaryCrossentropy",
-    metrics: ["accuracy"],
-  });
-  model.fit(featuresTest, labelTensor, {
-    epochs: 1,
-    batchSize: 64,
-    shuffle: true,
-  });
+  // // Machine Learning
+  // const model = tf.sequential();
+  // model.add(
+  //   tf.layers.dense({
+  //     units: 2,
+  //     inputShape: [6],
+  //     activation: "sigmoid",
+  //   })
+  // );
+  // model.compile({
+  //   optimizer: tf.train.adam(0.1),
+  //   loss: "binaryCrossentropy",
+  //   metrics: ["accuracy"],
+  // });
+  // model.fit(featuresTest, labelTensor, {
+  //   epochs: 1,
+  //   batchSize: 64,
+  //   shuffle: true,
+  // });
 
-  // Prediction using userData
-  const dataPredict = tf.tensor2d([userData]);
-  const normalisePredict = dataPredict.sub(mean).div(variance.sqrt());
-  const prediction = model.predict(normalisePredict);
-  const predictedArray = prediction.arraySync();
+  // // Prediction using userData
+  // const dataPredict = tf.tensor2d([userData]);
+  // const normalisePredict = dataPredict.sub(mean).div(variance.sqrt());
+  // const prediction = model.predict(normalisePredict);
+  // const predictedArray = prediction.arraySync();
 
-  if (predictedArray[0] < 0.8) {
-    console.log("Heart Disease predicted");
-  } else {
-    console.log("Heart Disease not predicted");
-  }
+  // if (predictedArray[0] < 0.8) {
+  //   console.log("Heart Disease predicted");
+  // } else {
+  //   console.log("Heart Disease not predicted");
+  // }
 }
 
 async function getDataForLR(dateQueried) {

@@ -6,6 +6,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./screens/LoginScreen";
 import DetailsScreen from "./screens/DetailsScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import HealthAnalysisScreen from "./screens/HealthAnalysisScreen";
+import BMIScreen from "./screens/BMIScreen";
+import RecipeScreen from "./screens/RecipeScreen";
 import Slider from "./components/Slider";
 import {
   useFonts,
@@ -18,9 +21,10 @@ import {
   FiraSans_600SemiBold_Italic,
   FiraSans_300Light,
   FiraSans_700Bold,
+  FiraSans_400Regular,
 } from "@expo-google-fonts/fira-sans";
 import MyDrawer from "./components/MyDrawer";
-import HealthAnalysisScreen from "./screens/HealthAnalysisScreen";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -32,46 +36,64 @@ export default function App() {
     FiraSans_600SemiBold_Italic,
     FiraSans_300Light,
     FiraSans_700Bold,
+    FiraSans_400Regular,
   });
 
   if (!fontsLoaded) {
     return null;
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Details"
-          component={DetailsScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Slider"
-          component={Slider}
-        />
-        <Stack.Screen
-          name="Welcome Home"
-          options={{ headerShown: false }}
-          component={MyDrawer}
-        />
-        <Stack.Screen
-          name="Profile"
-          options={{ headerShown: false }}
-          component={ProfileScreen}
-        />
-        <Stack.Screen
-          name="Analysis"
-          options={{ headerShown: false }}
-          component={HealthAnalysisScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Details"
+            component={DetailsScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Slider"
+            component={Slider}
+          />
+          <Stack.Screen
+            name="Welcome Home"
+            options={{
+              headerShown: false,
+            }}
+            component={MyDrawer}
+          />
+          <Stack.Screen
+            name="Profile"
+            options={{ headerShown: false }}
+            component={ProfileScreen}
+          />
+          <Stack.Screen
+            name="Analysis"
+            options={{ headerShown: false }}
+            component={HealthAnalysisScreen}
+          />
+          <Stack.Screen
+            name="BMI"
+            options={{
+              headerShown: false,
+            }}
+            component={BMIScreen}
+          />
+          <Stack.Screen
+            name="Recipe"
+            options={{
+              headerShown: false,
+            }}
+            component={RecipeScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
   );
 }
 

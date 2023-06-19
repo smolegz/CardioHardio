@@ -178,8 +178,8 @@ const ProfileScreen = () => {
 
       <Text
         style={{
-          fontFamily: "FiraSans_700Bold",
-          fontSize: 30,
+          fontFamily: "PassionOne_700Bold",
+          fontSize: 36,
           marginTop: 30,
           letterSpacing: 0.5,
         }}

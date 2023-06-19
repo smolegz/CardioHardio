@@ -25,30 +25,35 @@ const DATA = [
     id: "1",
     color: "#FB4A15",
     photo: <One style={{ height: 120, width: 120 }} />,
+    name: "BMI",
   },
   {
     activities: "Pedometer",
     id: "2",
     color: "#6B9CDE",
     photo: <Two style={{ height: 120, width: 120 }} />,
+    name: "BMI Calculator",
   },
   {
     activities: "Healthy Recipe",
     id: "3",
     color: "#DE6BDC",
     photo: <Three style={{ height: 120, width: 120, opacity: 1 }} />,
+    name: "Recipe",
   },
   {
     activities: "Health Analysis",
     id: "4",
     color: "#6BDE7A",
     photo: <Four style={{ height: 120, width: 120 }} />,
+    name: "",
   },
   {
     activities: "Coming Soon",
     id: "5",
     color: "#FAD69C",
     photo: <Five style={{ height: 120, width: 120 }} />,
+    name: "",
   },
 ];
 
@@ -134,13 +139,7 @@ const Home = (props) => {
           <View style={styles.MenuContainer}>
             {DATA.map((item) => {
               return (
-                <TouchableOpacity
-                  key={item.id}
-                  style={[
-                    styles.MenuButton,
-                    { backgroundColor: `${item.color}` },
-                  ]}
-                >
+                <TouchableOpacity key={item.id} style={[styles.MenuButton, {backgroundColor:`${item.color}`}]} onPress={() => navigation.navigate(item.name)}>
                   {item.photo}
                   <Text
                     style={{
@@ -154,17 +153,8 @@ const Home = (props) => {
                 </TouchableOpacity>
               );
             })}
-            <TouchableOpacity
-              style={styles.MenuButton}
-              onPress={goHealthAnalysis}
-            >
-              <Text
-                style={{
-                  fontFamily: "PassionOne_400Regular",
-                  fontSize: 18,
-                  color: "#000000",
-                }}
-              >
+            <TouchableOpacity style={styles.MenuButton} onPress={goHealthAnalysis}>
+              <Text style={{fontFamily: "PassionOne_400Regular", fontSize: 18, color: "#000000",}}>
                 Health Analysis (For Yuan Ting)
               </Text>
             </TouchableOpacity>
@@ -293,7 +283,7 @@ const styles = StyleSheet.create({
     fontFamily: "PassionOne_700Bold",
     fontSize: 40,
     // textDecorationLine: 'underline',
-    color: "#0C134F",
+    color: "#212A3E",
   },
   bodyContainer: {
     display: "flex",
