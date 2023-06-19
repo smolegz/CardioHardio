@@ -85,11 +85,11 @@ export async function logisticRegression(dateQueried) {
   const predictedArray = prediction.arraySync();
   console.log("14");
 
-  // if (predictedArray[0] < 0.8) {
-  //   console.log("Heart Disease predicted");
-  // } else {
-  //   console.log("Heart Disease not predicted");
-  // }
+  if (predictedArray[0] < 0.8) {
+    console.log("Heart Disease predicted");
+  } else {
+    console.log("Heart Disease not predicted");
+  }
 }
 
 async function getDataForLR(dateQueried) {

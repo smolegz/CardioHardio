@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   StatusBar,
   SafeAreaView,
-  Image
+  Image,
+  Modal,
+  Pressable,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -13,6 +15,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import BackButton from "../components/BackButton";
 import { SearchBar, Card } from "react-native-elements";
 import { RECIPE } from "../components/Recipe";
+import Close from "../assets/close.svg"
 
 let DATA = RECIPE;
 
@@ -26,6 +29,8 @@ const RecipeScreen = () => {
   const [breakfast, setBreakfast] = useState(false);
   const [lunch, setLunch] = useState(false);
   const [vegetarian, setVegetarian] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [item, setItem] = useState();
 
   useEffect(() => {
     setMasterDataSource(DATA);
@@ -70,6 +75,12 @@ const RecipeScreen = () => {
     setDinner(false);
     setVegetarian(false);
     setFilteredData(masterDataSource);
+    setSearch('')
+  }
+
+  const renderModal = (item) => {
+    setModalVisible(!modalVisible);
+    setItem(item);
   }
 
   return (
@@ -100,7 +111,7 @@ const RecipeScreen = () => {
               breakfast ? { backgroundColor: "#212A3E" } : null,
             ]}
             onPress={() => {
-              handleMeal("breakfast");
+              handleMeal("Breakfast");
               setBreakfast(true);
               setLunch(false);
               setDinner(false);
@@ -117,7 +128,7 @@ const RecipeScreen = () => {
               lunch ? { backgroundColor: "#212A3E" } : null,
             ]}
             onPress={() => {
-              handleMeal("lunch");
+              handleMeal("Lunch");
               setLunch(true);
               setBreakfast(false);
               setDinner(false);
@@ -134,7 +145,7 @@ const RecipeScreen = () => {
               dinner ? { backgroundColor: "#212A3E" } : null,
             ]}
             onPress={() => {
-              handleMeal("dinner");
+              handleMeal("Dinner");
               setDinner(true);
               setLunch(false);
               setBreakfast(false);
@@ -151,7 +162,7 @@ const RecipeScreen = () => {
               vegetarian ? { backgroundColor: "#212A3E" } : null,
             ]}
             onPress={() => {
-              handleVegetarian("vegetarian");
+              handleVegetarian("Vegetarian");
               setVegetarian(true);
               setBreakfast(false);
               setLunch(false);
@@ -187,7 +198,7 @@ const RecipeScreen = () => {
         <View>
           {filteredData.map((item) => {
             return (
-              <TouchableOpacity key={item.id}>
+              <TouchableOpacity key={item.id} onPress={() => renderModal(item)}>
                 <Card containerStyle={styles.card}>
                   <Image src={item.link} style={styles.img}></Image>
                   <Card.Divider></Card.Divider>
@@ -206,6 +217,79 @@ const RecipeScreen = () => {
             );
           })}
         </View>
+
+        <View style={styles.modalContainer}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+            // presentationStyle="fullScreen"
+          >
+            <SafeAreaView>
+              <ScrollView>
+                <View style={styles.modalView}>
+                  <View style={styles.modalHeader}>
+                    <Text style={styles.title}>{item?.title}</Text>
+                    <Pressable
+                      onPress={() => setModalVisible(false)}
+                      style={{ paddingTop: 20 }}
+                    >
+                      <Close />
+                    </Pressable>
+                  </View>
+                  <View
+                    style={{
+                      borderTopWidth: 2,
+                      width: "95%",
+                      marginTop: 10,
+                      borderColor: "#212A3E",
+                      marginBottom: 20,
+                    }}
+                  ></View>
+                  <Image src={item?.link} style={styles.modalImg}></Image>
+                  <View style={styles.modalDetails}>
+                    <Text style={styles.modalText}>Meal: {item?.meal}</Text>
+                    <Text style={styles.modalText}>
+                      Diet: {item?.vegetarian}
+                    </Text>
+                    <Text style={styles.modalText}>
+                      Calories: {item?.calories} kcal
+                    </Text>
+                    <Text style={styles.modalText}>
+                      Preparation: {item?.time}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      width: "80%",
+                      borderTopWidth: 1,
+                      paddingBottom: 20,
+                    }}
+                  ></View>
+                  <View style={styles.modalDetails}>
+                    <Text style={styles.modalText}>
+                      Instructions:
+                      {"\n"}
+                      {"\n"}
+                      {item?.description}
+                      {"\n"}
+                      {"\n"}
+                      {item?.description}
+                      {"\n"}
+                      {"\n"}
+                      {item?.description}
+                      {item?.description}
+                    </Text>
+                  </View>
+                 
+                </View>
+              </ScrollView>
+            </SafeAreaView>
+          </Modal>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -218,9 +302,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: StatusBar.currentHeight,
     marginLeft: 10,
-  },
-  scrollview: {
-    // backgroundColor: "pink",
   },
   header: {
     flexDirection: "row",
@@ -286,8 +367,56 @@ const styles = StyleSheet.create({
     marginRight: 2,
     color: "black",
   },
-  text: {
+  modalContainer: {
+    flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+  modalView: {
+    marginTop: 10,
+    backgroundColor: "white",
+    borderRadius: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalHeader: {
+    flexDirection: "row",
+    width: "100%",
+    marginLeft: 10,
+    alignItems: "center",
+  },
+  title: {
+    fontFamily: "FiraSans_700Bold",
+    fontSize: 28,
+    width: "87%",
+    paddingTop: 20,
+    paddingHorizontal: 10,
+    flexShrink: 1,
+  },
+  modalImg: {
+    height: 240,
+    width: "95%",
+    marginBottom: 10,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#1C1C1C",
+  },
+  modalDetails: {
+    width: "95%",
+    paddingBottom: 40,
+  },
+  modalText: {
     fontFamily: "FiraSans_400Regular",
-    fontSize: 14,
+    fontSize: 16,
+    paddingVertical: 7,
   },
 });
