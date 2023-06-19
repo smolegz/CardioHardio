@@ -2548,14 +2548,6 @@
     "@types/seedrandom" "^2.4.28"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-backend-cpu@3.17.0":
-  version "3.17.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-3.17.0.tgz"
-  integrity sha512-alfmaPLnsa/DvkhnPoX/r9ZVDcSuRZUJEElaG3o84JrCBOqzq2jcFwaT9KxchN8rDLmKjJMLQkcQx/bSp/Oz4w==
-  dependencies:
-    "@types/seedrandom" "2.4.27"
-    seedrandom "2.4.3"
-
 "@tensorflow/tfjs-backend-cpu@4.7.0":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-4.7.0.tgz"
@@ -2564,17 +2556,21 @@
     "@types/seedrandom" "^2.4.28"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-backend-webgl@3.17.0":
-  version "3.17.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-3.17.0.tgz"
-  integrity sha512-OC/IvU4TNx+B0J51kzCvSPWrC5qXtjY2aAsUvqXb9edhSMwrhC0sSS64t+KuIuPbNiAlVqPvlWZDz3WKPiIPdA==
+"@tensorflow/tfjs-backend-webgl@npm:3.17.0":
+  version: 3.17.0
+  resolution: "@tensorflow/tfjs-backend-webgl@npm:3.17.0"
   dependencies:
-    "@tensorflow/tfjs-backend-cpu" "3.17.0"
-    "@types/offscreencanvas" "~2019.3.0"
-    "@types/seedrandom" "2.4.27"
-    "@types/webgl-ext" "0.0.30"
-    "@types/webgl2" "0.0.6"
-    seedrandom "2.4.3"
+    "@tensorflow/tfjs-backend-cpu": "npm:3.17.0"
+    "@types/offscreencanvas": "npm:~2019.3.0"
+    "@types/seedrandom": "npm:2.4.27"
+    "@types/webgl-ext": "npm:0.0.30"
+    "@types/webgl2": "npm:0.0.6"
+    seedrandom: "npm:2.4.3"
+  peerDependencies:
+    "@tensorflow/tfjs-core": 3.17.0
+  checksum: 3a8b8c7ae8bdee4abbeb4dcd13b62738d6c5fe682d7ba9772ad275cfcb5ef0a751eb566a51b98d2611e04c4e867e471543daef755d63db6974056d847a33c2ac
+  languageName: node
+  linkType: hard
 
 "@tensorflow/tfjs-backend-webgl@4.7.0":
   version "4.7.0"
@@ -2587,17 +2583,7 @@
     "@types/webgl-ext" "0.0.30"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-converter@3.17.0":
-  version "3.17.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-converter/-/tfjs-converter-3.17.0.tgz"
-  integrity sha512-AlnIg7aKtfiFq7/ZrWDsVgaw82Uig2KLJY2MOAwadpI4OqhKwwArFHVbVBiOhAEHmp6obwwYaGtItmSM+dzlUQ==
-
-"@tensorflow/tfjs-converter@4.7.0":
-  version "4.7.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-converter/-/tfjs-converter-4.7.0.tgz"
-  integrity sha512-UpNWjNl8/TrP57HpA9CuDWuQ4FHByVGVmgQQCibDqnNLExLjydWxjskiwDETg/JLm31H+SH2FcSBoPgAcP0vEA==
-
-"@tensorflow/tfjs-core@^3.0.0", "@tensorflow/tfjs-core@^3.16.0", "@tensorflow/tfjs-core@3.21.0":
+"@tensorflow/tfjs-core@^3.0.0", "@tensorflow/tfjs-core@3.21.0":
   version "3.21.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-core/-/tfjs-core-3.21.0.tgz"
   integrity sha512-YSfsswOqWfd+M4bXIhT3hwtAb+IV8+ODwIxwdFR/7jTAPZP1wMVnSlpKnXHAN64HFOiP+Tm3HmKusEZ0+09A0w==
@@ -2610,20 +2596,6 @@
     long "4.0.0"
     node-fetch "~2.6.1"
     seedrandom "^3.0.5"
-
-"@tensorflow/tfjs-core@3.17.0":
-  version "3.17.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-core/-/tfjs-core-3.17.0.tgz"
-  integrity sha512-PMqEDysVy3WsSK4pU+UaoINRjps1RTF2CPvS1sWgOJqc/rUz8mSMibMosti0Is6DHGw7UiAq53y9VMuzQRVJqA==
-  dependencies:
-    "@types/long" "^4.0.1"
-    "@types/offscreencanvas" "~2019.3.0"
-    "@types/seedrandom" "2.4.27"
-    "@types/webgl-ext" "0.0.30"
-    "@webgpu/types" "^0.1.16"
-    long "4.0.0"
-    node-fetch "~2.6.1"
-    seedrandom "2.4.3"
 
 "@tensorflow/tfjs-core@4.7.0":
   version "4.7.0"
@@ -2639,10 +2611,9 @@
     node-fetch "~2.6.1"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-data@3.17.0":
-  version "3.17.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-data/-/tfjs-data-3.17.0.tgz"
-  integrity sha512-RgsdrGzWaQtxlRnk7Yiz8ebxbFfgNLITaFri6WxSPNZFI5ajLtw/daxp04ij9l1MIUJeJYgaKeMVXFvJwy8TAQ==
+"@tensorflow/tfjs-core@npm:^3.16.0":
+  version: 3.21.0
+  resolution: "@tensorflow/tfjs-core@npm:3.21.0"
   dependencies:
     "@types/node-fetch" "^2.1.2"
     node-fetch "~2.6.1"
@@ -2652,26 +2623,31 @@
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-data/-/tfjs-data-4.7.0.tgz"
   integrity sha512-0gpYn0BuuvI4/ELBIbtwqSmRM6tWrl3949jOJBOFrgDfu8mihFYpAZdXP6zUZViu4neoKgId7+44HlbHFIQFPA==
   dependencies:
-    "@types/node-fetch" "^2.1.2"
-    node-fetch "~2.6.1"
-    string_decoder "^1.3.0"
+    "@types/node-fetch": "npm:^2.1.2"
+    node-fetch: "npm:~2.6.1"
+  peerDependencies:
+    "@tensorflow/tfjs-core": 3.17.0
+    seedrandom: ~2.4.3
+  checksum: 9ab45f55bbf8ccff48c19654113b044a143d0db18eea1e04ff6799b70563681905f2c874fff883fb09084d1af5484bd849967e824dfd57d9b7b43ae59572d4e0
+  languageName: node
+  linkType: hard
 
 "@tensorflow/tfjs-layers@^3.16.0":
   version "3.21.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-layers/-/tfjs-layers-3.21.0.tgz"
   integrity sha512-CMVXsraakXgnXEnqD9QbtResA7nvV7Jz20pGmjFIodcQkClgmFFhdCG5N+zlVRHEz7VKG2OyfhltZ0dBq/OAhA==
 
-"@tensorflow/tfjs-layers@3.17.0":
-  version "3.17.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-layers/-/tfjs-layers-3.17.0.tgz"
-  integrity sha512-SXx6k1va/RfiCmwaglbaN/eQzZ33xhCUZgk5zpRJkxk3Gx9xXRHb05HszM0BH+cokwmueWcJQpRjcnvjdKxtUg==
+"@tensorflow/tfjs-layers@3.7.0":
+  version "3.7.0"
+  resolved "https://registry.npmjs.org/@tensorflow/tfjs-layers/-/tfjs-layers-3.7.0.tgz"
+  integrity sha512-53WwvCk+Bdppa+GsRCJ8dt/coyAVFCYo3gOmuN+lBFmoSRX/LsdNjanF88mmOAPmoRFXrVG6bkjEQKe0YOkYcw==
 
 "@tensorflow/tfjs-layers@4.7.0":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-layers/-/tfjs-layers-4.7.0.tgz"
   integrity sha512-BAkWhX70g75R1QXuIpZXgV/BPvZQMp0HsyQTYwWAWYVwLBMhN2QHJV7jbhacZ5Y5ostCFpHX0WZm7Ex3JPNi5A==
 
-"@tensorflow/tfjs-node@^4.6.0":
+"@tensorflow/tfjs-node@^4.7.0":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs-node/-/tfjs-node-4.7.0.tgz"
   integrity sha512-eQo8EM24kX+esR0GnWLhMWsmNDLyoEEVeWedWJx39EE5V/bVTpFSNUaRrbIBcSkcuQ1HnaEBmZ5xGNS11qw1dw==
@@ -2685,24 +2661,7 @@
     rimraf "^2.6.2"
     tar "^4.4.6"
 
-"@tensorflow/tfjs@^3.17.0":
-  version "3.17.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs/-/tfjs-3.17.0.tgz"
-  integrity sha512-mLN0z5fOdjzikQbYeZQALQYjSFt7OYTrTl+Ky8nkMv0bvb69szFVS/655ir4zkTYL4F/YmU140w8Ml+DVHtNkQ==
-  dependencies:
-    "@tensorflow/tfjs-backend-cpu" "3.17.0"
-    "@tensorflow/tfjs-backend-webgl" "3.17.0"
-    "@tensorflow/tfjs-converter" "3.17.0"
-    "@tensorflow/tfjs-core" "3.17.0"
-    "@tensorflow/tfjs-data" "3.17.0"
-    "@tensorflow/tfjs-layers" "3.17.0"
-    argparse "^1.0.10"
-    chalk "^4.1.0"
-    core-js "3"
-    regenerator-runtime "^0.13.5"
-    yargs "^16.0.3"
-
-"@tensorflow/tfjs@4.7.0":
+"@tensorflow/tfjs@^4.6.0", "@tensorflow/tfjs@4.7.0":
   version "4.7.0"
   resolved "https://registry.npmjs.org/@tensorflow/tfjs/-/tfjs-4.7.0.tgz"
   integrity sha512-IkkEhmjGxlpZIX0jTQQoWprFuc4DY/4JgKk4cL+8FiaWOPP9nIP7pINWDf+5jHquy4tF5AsxpnWbSMWWBs2IiA==
@@ -2952,10 +2911,12 @@
   resolved "https://registry.npmjs.org/@types/webgl-ext/-/webgl-ext-0.0.30.tgz"
   integrity sha512-LKVgNmBxN0BbljJrVUwkxwRYqzsAEPcZOe6S2T6ZaBDIrFp0qu4FNlpc5sM1tGbXUYFgdVQIoeLk1Y1UoblyEg==
 
-"@types/webgl2@0.0.6":
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/@types/webgl2/-/webgl2-0.0.6.tgz"
-  integrity sha512-50GQhDVTq/herLMiqSQkdtRu+d5q/cWHn4VvKJtrj4DJAjo1MNkWYa2MA41BaBO1q1HgsUjuQvEOk0QHvlnAaQ==
+"@types/webgl2@npm:0.0.6":
+  version: 0.0.6
+  resolution: "@types/webgl2@npm:0.0.6"
+  checksum: 97be77e696c512360c34af0f11b5e81ea8dc80fcae3c32d8417620fffb84d5e047ab3bcb3c4dea196dcaff43d7b2f6dc8341a6b75c3b15856fc3ae3cf667edd6
+  languageName: node
+  linkType: hard
 
 "@types/yargs-parser@*":
   version "21.0.0"
@@ -5217,15 +5178,24 @@ fs.realpath@^1.0.0:
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
 
-function-bind@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
-  integrity sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==
+"fsevents@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "fsevents@npm:2.3.2"
+  dependencies:
+    node-gyp: "npm:latest"
+  checksum: c85eed7a3e0bbe6908f9feae8a823ee63a796ea2b32e20616ee33f0dda9417976f5a087a8cd2ccf228aae1c5b8b6125c9800f05dd69aaf016c34352a0567dcfb
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
 
-functional-red-black-tree@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz"
-  integrity sha512-dsKNQNdj6xA3T+QlADDA7mOSlX0qiMINjn0cgr+eGHGsbSHzTabcIogz2+p/iqP1Xs6EP/sS2SbqH+brGTbq0g==
+"fsevents@patch:fsevents@npm%3A^2.3.2#optional!builtin<compat/fsevents>":
+  version: 2.3.2
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#optional!builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
+  dependencies:
+    node-gyp: "npm:latest"
+  conditions: os=darwin
+  languageName: node
+  linkType: hard
 
 gauge@^3.0.0:
   version "3.0.2"
