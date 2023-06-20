@@ -19,7 +19,6 @@
     "@react-navigation/native-stack": "^6.9.12",
     "@tensorflow-models/knn-classifier": "^1.2.4",
     "@tensorflow/tfjs": "^3.7.0",
-    "@tensorflow/tfjs-node": "^4.7.0",
     "csv": "^6.3.1",
     "csv-parser": "^3.0.0",
     "expo": "^48.0.19",
@@ -30,7 +29,6 @@
     "expo-status-bar": "~1.4.4",
     "expo-updates": "~0.16.4",
     "firebase": "^9.22.1",
-    "firebase-admin": "^11.9.0",
     "papaparse": "^5.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -47,8 +45,7 @@
     "react-native-svg": "13.4.0",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-uuid": "^2.0.1",
-    "react-native-web": "~0.18.10",
-    "scikitjs": "^1.24.0"
+    "react-native-web": "~0.18.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

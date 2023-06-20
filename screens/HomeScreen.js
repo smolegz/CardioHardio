@@ -11,18 +11,13 @@ let data;
 const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  let q = query(colRef, where("id", "==", userRefid));
+  // let q = query(colRef, where("id", "==", userRefid));
 
   useEffect(
-    () =>
-      onSnapshot(q, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          data = doc.data().name;
-          setIsLoading(false);
-        });
-      }),
-    []
-  );
+    () => {
+      setTimeout(() => setIsLoading(false), 730)
+    }
+  ,[]);
 
   return (
     <View style={styles.container}>

@@ -60,6 +60,7 @@ const LoginScreen = () => {
     querySnapshot.forEach((doc) => {
       userRefid = doc.data().id;
     });
+    console.log(userRefid);
     navigation.replace("Welcome Home");
   };
 
