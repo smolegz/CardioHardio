@@ -5,16 +5,6 @@ const { getFirestore } = require('firebase-admin/firestore');
 
 // Logistic Regression Function
 async function logisticRegression(dateQueried) {
-    // Initalise Server
-    var admin = require("firebase-admin");
-    var serviceAccount = require("../../serviceAccountKey.json");
-
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
-      });
-      
-    const db = getFirestore();
     
     // Fetch Data from Firestore
     const userData = await getDataForLR(dateQueried);
@@ -87,6 +77,16 @@ async function logisticRegression(dateQueried) {
 
 async function getDataForLR(dateQueried) {
     try {
+        // Initalise Server
+        var admin = require("firebase-admin");
+        var serviceAccount = require("../../serviceAccountKey.json");
+
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+            databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
+        });
+        
+        const db = getFirestore();
         const docRef = db.collection('UserData').doc(dateQueried);
         const docSnapshot = await docRef.get();
         
@@ -95,7 +95,6 @@ async function getDataForLR(dateQueried) {
             const { alcohol, gender, activity, smoking, age, weight, height } = docFields;
             const BMI = weight / Math.pow( height / 100, 2);
             const fieldsArr = [ alcohol, gender, activity, smoking, age, BMI];
-
             return fieldsArr;
         } else {
             console.log('Doc not found');
@@ -108,4 +107,4 @@ async function getDataForLR(dateQueried) {
 
 // module.exports = { logisticRegression };
 
-export {logisticRegression};
+logisticRegression('2023-06-07');

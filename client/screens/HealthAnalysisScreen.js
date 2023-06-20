@@ -6,7 +6,7 @@ import * as tf from "@tensorflow/tfjs";
 import Papa from "papaparse";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { logisticRegression } from "../Backend/Testing/newLR";
+// import { logisticRegression } from "../Backend/Testing/newLR";
 
 const HealthAnalysisScreen = () => {
   const [tfReady, setTfReady] = useState(false);
@@ -21,7 +21,8 @@ const HealthAnalysisScreen = () => {
   const navigation = useNavigation();
 
   const calculate = async () => {
-    await logisticRegression("2023-06-08");
+    // await logisticRegression("2023-06-08");
+    console.log("Hello World!");
   };
 
   return (
