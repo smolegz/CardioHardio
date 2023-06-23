@@ -71,8 +71,10 @@ async function logisticRegression(dateQueried) {
     console.log(userData);
     if (predictedArray[0] < 0.8) {
         console.log('Heart Disease predicted', predictedArray);
+        return 'Heart Disease predicted';
     } else {
         console.log('Heart Disease not predicted', predictedArray);
+        return 'Heart Disease not predicted';
     };
 }
 
@@ -108,14 +110,20 @@ async function getDataForLR(dateQueried) {
 
 // module.exports = { logisticRegression };
 const app = express();
-const PORT = 3000;
+const PORT = 8000;
 
-app.get('/predict', (req, res) => {
+// const router = express.Router();
+// const predictions = logisticRegression('2023-06-08');
+// router.post('/predict', );
+// app.use(express.json());
+// app.use(router);
+
+app.get('/predict', async (req, res) => {
     const predictions = logisticRegression('2023-06-08');
 
-    res.json({predictions});
+    res.send(predictions);
 })
 
 app.listen(PORT, () => {
-    console.log('Server is running on http://localhost:${PORT}');
-})
+    console.log('Server is running on http://localhost:8000');
+});
