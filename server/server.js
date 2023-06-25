@@ -83,11 +83,13 @@ async function getDataForLR(dateQueried) {
         // Initalise Server
         var admin = require("firebase-admin");
         var serviceAccount = require("./serviceAccountKey.json");
-
-        admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount),
-            databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
-        });
+        
+        if (!admin.apps.length) {
+            admin.initializeApp({
+                credential: admin.credential.cert(serviceAccount),
+                databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
+            });
+        }
         
         const db = getFirestore();
         const docRef = db.collection('UserData').doc(dateQueried);
@@ -108,21 +110,14 @@ async function getDataForLR(dateQueried) {
     }
 } 
 
-// module.exports = { logisticRegression };
 const app = express();
 const PORT = 8000;
 
-// const router = express.Router();
-// const predictions = logisticRegression('2023-06-08');
-// router.post('/predict', );
-// app.use(express.json());
-// app.use(router);
-
 app.get('/predict', async (req, res) => {
-    const predictions = logisticRegression('2023-06-08');
+    const predictions = await logisticRegression('2023-06-08');
 
     res.send(predictions);
-})
+});
 
 app.listen(PORT, () => {
     console.log('Server is running on http://localhost:8000');
