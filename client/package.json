@@ -19,6 +19,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "@tensorflow-models/knn-classifier": "^1.2.4",
     "@tensorflow/tfjs": "^3.7.0",
+    "axios": "^1.4.0",
     "csv": "^6.3.1",
     "csv-parser": "^3.0.0",
     "expo": "^48.0.19",

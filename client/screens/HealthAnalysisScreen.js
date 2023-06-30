@@ -1,27 +1,24 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Linking } from "react-native";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import * as tf from "@tensorflow/tfjs";
-import Papa from "papaparse";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import { logisticRegression } from "../Backend/Testing/newLR";
+import axios from 'axios';
 
 const HealthAnalysisScreen = () => {
-  const [tfReady, setTfReady] = useState(false);
+  const [backendData, setBackendData] = useState([{}]);
 
-  useEffect(() => {
-    async function prepare() {
-      await tf.ready();
+  async function logisticRegression() {
+    try {
+      const result = await axios.get('https://cf41-2406-3003-206f-1424-c51-d35e-aca4-cb18.ngrok-free.app/predict');
+      console.log('Prediction:', result.data);
+    } catch (error) {
+      console.log('Failed', error);
     }
-    prepare();
-  }, []);
-
+  }
   const navigation = useNavigation();
 
   const calculate = async () => {
-    await logisticRegression("2023-06-08");
+    await logisticRegression();
   };
 
   return (
