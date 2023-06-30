@@ -6,9 +6,10 @@ import {
   Image,
   ScrollView,
   StatusBar,
+  RefreshControl,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState  } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { fireAuth } from "../firebase";
 import Logo from "../assets/drawer.svg";
 import One from "../assets/Home/one.svg";
@@ -18,6 +19,8 @@ import Four from "../assets/Home/four.svg";
 import Five from "../assets/Home/five.svg";
 import * as Updates from "expo-updates";
 import StepsButton from "./StepButton";
+import { Pedometer } from "expo-sensors";
+
 
 const DATA = [
   {
@@ -58,12 +61,32 @@ const DATA = [
 ];
 
 const Home = (props) => {
-
+  const [refreshing, setRefreshing] = useState(false);
+  const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
+  const [currentStepCount, setCurrentStepCount] = useState(0);
   const navigation = useNavigation();
 
   useEffect(() => {
     reactToUpdates();
+    subscribe();
   }, []);
+
+  const subscribe = async () => {
+    const isAvailable = await Pedometer.isAvailableAsync();
+    setIsPedometerAvailable(String(isAvailable));
+    setRefreshing(true);
+
+    if (isAvailable) {
+      let end = new Date();
+      let start = new Date(end.getFullYear(),end.getMonth(),end.getDate(),0,0,0);
+   
+      const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
+      setCurrentStepCount(pastStepCountResult.steps);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 1000);
+    }
+  }
 
   const reactToUpdates = async () => {
     Updates.addListener((event) => {
@@ -124,8 +147,15 @@ const Home = (props) => {
       <ScrollView
         style={styles.innerContainer}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={subscribe}
+            tintColor={"#212A3E"}
+          />
+        }
       >
-        <StepsButton/>
+        <StepsButton steps={currentStepCount} />
         <View style={styles.exploreContainer}>
           <Text style={styles.exploreText}> EXPLORE </Text>
         </View>
@@ -307,5 +337,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  
 });

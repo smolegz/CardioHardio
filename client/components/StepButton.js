@@ -6,33 +6,13 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ProgressChart } from "react-native-chart-kit";
-import { Pedometer } from "expo-sensors";
 import { useNavigation } from "@react-navigation/native";
 import Walk from '../assets/walk.svg'
 
-const StepsButton = () => {
+const StepsButton = (props) => {
   const navigation = useNavigation();
-  const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
-  const [currentStepCount, setCurrentStepCount] = useState(0);
 
-   useEffect(() => {
-    subscribe();
-  }, []);
-
-  const subscribe = async () => {
-    const isAvailable = await Pedometer.isAvailableAsync();
-    setIsPedometerAvailable(String(isAvailable));
-
-    if (isAvailable) {
-      let end = new Date();
-      let start = new Date(end.getFullYear(),end.getMonth(),end.getDate(),0,0,0);
-   
-      const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
-
-      setCurrentStepCount(pastStepCountResult.steps);
-    }
-  }
-  const value = (currentStepCount / 5000 )> 1 ? 1 : currentStepCount/5000;
+  const value = (props.steps / 5000 )> 1 ? 1 : props.steps/5000;
   const progressData = {
     data: [value],
   };
@@ -64,13 +44,13 @@ const StepsButton = () => {
               chartConfig={chartConfig}
               hideLegend={true}
               style= {{
-                marginLeft: -70
+                marginLeft: -70,
               }}
             />
             <View style={styles.progressDetails}>
-              <Text style={styles.progressText}>{currentStepCount} steps</Text>
+              <Text style={styles.progressText}>{props.steps} steps</Text>
               <Text style={styles.progressText}>
-                {((currentStepCount / 5000) * 100).toFixed(1)}% progress
+                {((props.steps / 5000) * 100).toFixed(1)}% progress
               </Text>
               <Text
                 style={{
@@ -96,10 +76,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     width: "100%",
     marginLeft: 15,
-    color: '#212A3E'
+    color: "#212A3E",
   },
   progress: {
-    borderWidth: 1,
     height: 120,
     marginTop: 5,
     width: "96%",
@@ -107,7 +86,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
-    backgroundColor: "#242A3E",
+    backgroundColor: "#212A3E",
+    shadowColor: "black",
+    shadowOffset: { width: 3, height: 5 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
   },
   progressButton: {
     width: "100%",

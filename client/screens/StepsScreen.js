@@ -2,10 +2,9 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
   StatusBar,
+  ScrollView,
+  RefreshControl
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState, useEffect } from "react";
@@ -15,6 +14,7 @@ import { Pedometer } from "expo-sensors";
 import { BarChart, ProgressChart } from "react-native-chart-kit";
 
 const StepsScreen = () => {
+  const [refreshing, setRefreshing] = React.useState(false);
   const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
   const [pastStepCount, setPastStepCount] = useState(0);
   const [currentStepCount, setCurrentStepCount] = useState(0);
@@ -25,9 +25,9 @@ const StepsScreen = () => {
   let arr = [];
   let dateArray = [];
 
-
   const subscribe = async () => {
     const isAvailable = await Pedometer.isAvailableAsync();
+    setRefreshing(true);
     setIsPedometerAvailable(String(isAvailable));
 
     if (isAvailable) {
@@ -54,9 +54,15 @@ const StepsScreen = () => {
         }
         console.log(arr);
       }
+      dateArray.push("nil")
+      arr.push(Number(Math.max(...arr).toPrecision(1)) + 10000);
       setArray(arr);
       setDate(dateArray);
-      setCurrentStepCount(arr[6])
+      setCurrentStepCount(arr[6]);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 500);
+
       return Pedometer.watchStepCount((result) => {
         // setCurrentStepCount(result.steps);
        
@@ -68,7 +74,6 @@ const StepsScreen = () => {
 
   useEffect(() => {
     const subscription = subscribe();
-    // return () => subscription && subscription.remove();
   }, []);
 
   const chartConfig = {
@@ -82,79 +87,90 @@ const StepsScreen = () => {
     barPercentage: 0.8,
     barRadius: 10,
     decimalPlaces: 0,
-    useShadowColorFromDataset: false, // optional,
+    propsForBackgroundLines: {
+      strokeWidth: 0.5,
+      stroke: "grey",
+    },
+    fillShadowGradientOpacity: 1,
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
-      <View>
-        <BackButton back={() => navigation.goBack()} />
-      </View>
-      <View>
-        <View style={styles.progress}>
-          <View>
-            <Text style={styles.progressText}>Daily Step Tracker</Text>
-          </View>
-          <ProgressChart
-            data={{
-              data: [value],
-            }}
-            width={100}
-            height={100}
-            strokeWidth={20}
-            radius={36}
-            chartConfig={chartConfig}
-            hideLegend={true}
-            style={{
-              // borderRadius: 150,
-              marginLeft: 0,
-              // backgroundColor: "white",
-              paddingVertical: 5,
-            }}
-          />
-          <Text style={styles.progressText}>
-            {currentStepCount} out of 5,000 steps today
-          </Text>
-          <Text style={styles.progressSmallText}>Dist. Travelled:  {(currentStepCount/1300).toFixed(3)} km</Text>
-          <Text style={styles.progressSmallText}>Calories Burnt:  {(currentStepCount*0.04615).toFixed(0)} kcal</Text>
-          <Text style={styles.progressSmallText}>Progress:  {(currentStepCount/5000)*100}%</Text>
+      <SafeAreaView style={styles.container}>
+        <ScrollView refreshControl= {
+          <RefreshControl refreshing={refreshing} onRefresh={subscribe} tintColor={"#212A3E"}/>
+        }>
+        <StatusBar barStyle="dark-content" />
+        <View>
+          <BackButton back={() => navigation.goBack()} />
         </View>
-        <Text style={styles.text}>Steps Taken in Last 7 Days</Text>
-        <BarChart
-          style={{
-            borderRadius: 0,
-            marginHorizontal: "1%",
-            backgroundColor: "#212A3E",
-            paddingTop: 20,
-            shadowColor: "black",
-            shadowOffset: { width: 2, height: 5 },
-            shadowOpacity: 0.3,
-            shadowRadius: 4,
-            borderRadius: 20,
-            width: "96%",
-            marginTop: "3%",
-          }}
-          data={{
-            labels: date,
-            datasets: [
-              {
-                data: array,
-              },
-            ],
-          }}
-          width={370}
-          height={320}
-          chartConfig={chartConfig}
-          verticalLabelRotation={0}
-          withHorizontalLabels={true}
-          showBarTops={false}
-          showValuesOnTopOfBars={true}
-          fromZero={true}
-          withInnerLines={true}
-        />
-      </View>
-    </SafeAreaView>
+        <View style={{ zIndex: -1 }}>
+          <View style={styles.progress}>
+            <View>
+              <Text style={styles.progressText}>Daily Step Tracker</Text>
+            </View>
+            <ProgressChart
+              data={{
+                data: [value],
+              }}
+              width={100}
+              height={100}
+              strokeWidth={20}
+              radius={36}
+              chartConfig={chartConfig}
+              hideLegend={true}
+              style={{
+                marginLeft: 0,
+                paddingVertical: 5,
+              }}
+            />
+            <Text style={styles.progressText}>
+              {currentStepCount} out of 5,000 steps today
+            </Text>
+            <Text style={styles.progressSmallText}>
+              Dist. Travelled: {(currentStepCount / 1300).toFixed(3)} km
+            </Text>
+            <Text style={styles.progressSmallText}>
+              Calories Burnt: {(currentStepCount * 0.04615).toFixed(0)} kcal
+            </Text>
+            <Text style={styles.progressSmallText}>
+              Progress: {(currentStepCount / 5000) * 100}%
+            </Text>
+          </View>
+          <Text style={styles.text}>Steps Taken in Last 7 Days</Text>
+          <View style={styles.barChart}>
+            <BarChart
+              style={{
+                // marginHorizontal: "1%",
+                backgroundColor: "#212A3E",
+                paddingTop: 20,
+                borderRadius: 20,
+                width: "100%",
+                marginTop: "3%",
+                overflow: "hidden",
+              }}
+              data={{
+                labels: date,
+                datasets: [
+                  {
+                    data: array,
+                  },
+                ],
+              }}
+              width={430}
+              height={320}
+              chartConfig={chartConfig}
+              verticalLabelRotation={0}
+              withHorizontalLabels={true}
+              showBarTops={false}
+              showValuesOnTopOfBars={true}
+              fromZero={true}
+              withInnerLines={true}
+            />
+          </View>
+        </View>
+        </ScrollView>
+      </SafeAreaView>
+    
   );
 }
 
@@ -181,6 +197,10 @@ const styles = StyleSheet.create({
     marginLeft: "10%",
     marginTop: 20,
     borderRadius: 30,
+    shadowColor: "#212A3E",
+    shadowOffset: { width: 7, height: 7 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
   },
   progressText: {
     fontSize: 18,
@@ -192,5 +212,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     fontFamily: "FiraSans_600SemiBold_Italic",
+  },
+  barChart: {
+    width: "97%",
+    justifyContent: "center",
+    shadowColor: "#212A3E",
+    shadowOffset: { width: 5, height: 5 },
+    shadowOpacity: 0.7,
+    shadowRadius: 10,
   },
 });
