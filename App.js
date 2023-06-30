@@ -9,6 +9,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import HealthAnalysisScreen from "./screens/HealthAnalysisScreen";
 import BMIScreen from "./screens/BMIScreen";
 import RecipeScreen from "./screens/RecipeScreen";
+import StepsScreen from "./screens/StepsScreen";
 import Slider from "./components/Slider";
 import {
   useFonts,
@@ -43,57 +44,63 @@ export default function App() {
     return null;
   }
   return (
-
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Login"
-            component={LoginScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Details"
-            component={DetailsScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Slider"
-            component={Slider}
-          />
-          <Stack.Screen
-            name="Welcome Home"
-            options={{
-              headerShown: false,
-            }}
-            component={MyDrawer}
-          />
-          <Stack.Screen
-            name="Profile"
-            options={{ headerShown: false }}
-            component={ProfileScreen}
-          />
-          <Stack.Screen
-            name="Analysis"
-            options={{ headerShown: false }}
-            component={HealthAnalysisScreen}
-          />
-          <Stack.Screen
-            name="BMI"
-            options={{
-              headerShown: false,
-            }}
-            component={BMIScreen}
-          />
-          <Stack.Screen
-            name="Recipe"
-            options={{
-              headerShown: false,
-            }}
-            component={RecipeScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Details"
+          component={DetailsScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Slider"
+          component={Slider}
+        />
+        <Stack.Screen
+          name="Welcome Home"
+          options={{
+            headerShown: false,
+          }}
+          component={MyDrawer}
+        />
+        <Stack.Screen
+          name="Profile"
+          options={{ headerShown: false }}
+          component={ProfileScreen}
+        />
+        <Stack.Screen
+          name="Analysis"
+          options={{ headerShown: false }}
+          component={HealthAnalysisScreen}
+        />
+        <Stack.Screen
+          name="BMI"
+          options={{
+            headerShown: false,
+          }}
+          component={BMIScreen}
+        />
+        <Stack.Screen
+          name="Recipe"
+          options={{
+            headerShown: false,
+          }}
+          component={RecipeScreen}
+        />
+        <Stack.Screen
+          name="Steps"
+          options={{
+            headerShown: false,
+          }}
+          component={StepsScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

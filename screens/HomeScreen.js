@@ -1,17 +1,26 @@
 import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import React, { useState, useEffect } from "react";
 import { colRef } from "../firebase";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { userRefid } from "./LoginScreen";
 import { onSnapshot, query, where, collection } from "firebase/firestore";
 import Home from "../components/Home";
 import Loading from "../assets/loading.svg";
+import { useAuth } from "../firebase";
 
-let data;
 const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
+  let currentUser = useAuth();
+  const [url, setURL] = useState("");
+  const [name, setName] = useState("");
   // let q = query(colRef, where("id", "==", userRefid));
+
+  useFocusEffect(() => {
+    console.log("Effect is running");
+    setURL(currentUser?.photoURL);
+    setName(currentUser?.displayName);
+  });
 
   useEffect(
     () => {
@@ -36,7 +45,7 @@ const HomeScreen = () => {
           </Text>
         </View>
       ) : (
-        <Home name={data} />
+        <Home name={name} url={url} />
       )}
     </View>
   );

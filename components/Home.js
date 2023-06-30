@@ -16,8 +16,8 @@ import Two from "../assets/Home/two.svg";
 import Three from "../assets/Home/three.svg";
 import Four from "../assets/Home/four.svg";
 import Five from "../assets/Home/five.svg";
-import { useAuth } from "../firebase";
 import * as Updates from "expo-updates";
+import StepsButton from "./StepButton";
 
 const DATA = [
   {
@@ -32,7 +32,7 @@ const DATA = [
     id: "2",
     color: "#6B9CDE",
     photo: <Two style={{ height: 120, width: 120 }} />,
-    name: "BMI Calculator",
+    name: "Steps",
   },
   {
     activities: "Healthy Recipe",
@@ -58,9 +58,6 @@ const DATA = [
 ];
 
 const Home = (props) => {
-  const [url, setURL] = useState("");
-  const [name, setName] = useState("");
-  let currentUser = useAuth();
 
   const navigation = useNavigation();
 
@@ -87,12 +84,6 @@ const Home = (props) => {
       })
       .catch((error) => alert(error.message));
   };
-  useFocusEffect(() => {
-    console.log("Effect is running");
-    setURL(currentUser?.photoURL);
-    setName(currentUser?.displayName);
-    console.log(name);
-  });
 
   const goToProfile = () => {
     navigation.navigate("Profile");
@@ -102,6 +93,8 @@ const Home = (props) => {
     navigation.navigate("Analysis");
   };
 
+  
+
   return (
     <View style={{ width: "100%", flex: 1 }}>
       <StatusBar barStyle="light-content" backgroundColor="#ffffff" />
@@ -110,11 +103,11 @@ const Home = (props) => {
           <View style={styles.profile}>
             <View style={styles.pictureContainer}>
               <View style={styles.innerRadius}>
-                <Image style={styles.tinyLogo} src={url} />
+                <Image style={styles.tinyLogo} src={props.url} />
               </View>
             </View>
             <View style={styles.titleContainer}>
-              <Text style={styles.welcome}>Welcome Home, {name}</Text>
+              <Text style={styles.welcome}>Welcome Home, {props.name}</Text>
               <TouchableOpacity onPress={goToProfile}>
                 <Text style={{ color: "white" }}>Edit Profile</Text>
               </TouchableOpacity>
@@ -132,6 +125,7 @@ const Home = (props) => {
         style={styles.innerContainer}
         showsVerticalScrollIndicator={false}
       >
+        <StepsButton/>
         <View style={styles.exploreContainer}>
           <Text style={styles.exploreText}> EXPLORE </Text>
         </View>
@@ -139,7 +133,14 @@ const Home = (props) => {
           <View style={styles.MenuContainer}>
             {DATA.map((item) => {
               return (
-                <TouchableOpacity key={item.id} style={[styles.MenuButton, {backgroundColor:`${item.color}`}]} onPress={() => navigation.navigate(item.name)}>
+                <TouchableOpacity
+                  key={item.id}
+                  style={[
+                    styles.MenuButton,
+                    { backgroundColor: `${item.color}` },
+                  ]}
+                  onPress={() => navigation.navigate(item.name)}
+                >
                   {item.photo}
                   <Text
                     style={{
@@ -153,8 +154,17 @@ const Home = (props) => {
                 </TouchableOpacity>
               );
             })}
-            <TouchableOpacity style={styles.MenuButton} onPress={goHealthAnalysis}>
-              <Text style={{fontFamily: "PassionOne_400Regular", fontSize: 18, color: "#000000",}}>
+            <TouchableOpacity
+              style={styles.MenuButton}
+              onPress={goHealthAnalysis}
+            >
+              <Text
+                style={{
+                  fontFamily: "PassionOne_400Regular",
+                  fontSize: 18,
+                  color: "#000000",
+                }}
+              >
                 Health Analysis (For Yuan Ting)
               </Text>
             </TouchableOpacity>
@@ -282,7 +292,6 @@ const styles = StyleSheet.create({
   exploreText: {
     fontFamily: "PassionOne_700Bold",
     fontSize: 40,
-    // textDecorationLine: 'underline',
     color: "#212A3E",
   },
   bodyContainer: {
@@ -298,4 +307,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  
 });

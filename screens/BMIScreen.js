@@ -33,7 +33,7 @@ const BMIScreen = () => {
         <BackButton back={() => navigation.goBack()} />
       </View>
       <View style={styles.title}>
-        <Text style={{ fontSize: 36, fontFamily: "PassionOne_700Bold" }}>
+        <Text style={{ fontSize: 36, fontFamily: "FiraSans_700Bold" }}>
           BMI Calculator
         </Text>
       </View>
@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 0,
-    height: "100%",
   },
   title: {
     justifyContent: "center",
@@ -144,6 +143,10 @@ const styles = StyleSheet.create({
     borderEndWidth: 0,
     borderColor: "#342CC9",
     backgroundColor: "#342CC9",
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
   },
   female: {
     borderWidth: 2,
@@ -155,12 +158,16 @@ const styles = StyleSheet.create({
     borderLeftColor: "#DD55DD",
     borderLeftWidth: 0.5,
     backgroundColor: "#DD55DD",
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3,
   },
   genderText: {
     textAlign: "center",
     fontFamily: "FiraSans_300Light",
     color: "white",
-    fontSize: 18
+    fontSize: 18,
   },
   picture: {
     padding: 20,
@@ -175,8 +182,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "90%",
-    borderTopWidth: 1,
-    borderColor: "#DAD5DA",
+    borderTopWidth: 2,
+    borderColor: "#212A3E",
     paddingTop: "5%",
   },
   track: {

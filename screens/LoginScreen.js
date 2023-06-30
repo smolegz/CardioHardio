@@ -13,14 +13,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import {
-  addDoc,
-  collection,
-  onSnapshot,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
 import One from "../assets/Home/one.svg";
 
 let userRefid;
@@ -60,13 +53,13 @@ const LoginScreen = () => {
     querySnapshot.forEach((doc) => {
       userRefid = doc.data().id;
     });
-    console.log(userRefid);
+    console.log("UserRefid:", userRefid);
     navigation.replace("Welcome Home");
   };
 
   const handleLogin = () => {
     signInWithEmailAndPassword(fireAuth, email, password)
-      .then((userCredentials) => {
+      .then(async (userCredentials) => {
         const user = userCredentials.user;
         const q = query(colRef, where("userEmail", "==", user.email));
         getQuery(q);

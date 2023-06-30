@@ -10,7 +10,7 @@ import Back from "../assets/back.svg";
 const BackButton = (props) => {
   return (
     <TouchableOpacity
-      style={styles.back}
+      style={[styles.back]}
       onPress={props.back}
     >
       <Back width="16" height="16" />
