@@ -284,7 +284,6 @@ const RecipeScreen = () => {
                       {item?.description}
                     </Text>
                   </View>
-                 
                 </View>
               </ScrollView>
             </SafeAreaView>

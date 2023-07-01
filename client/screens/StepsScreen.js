@@ -4,7 +4,8 @@ import {
   View,
   StatusBar,
   ScrollView,
-  RefreshControl
+  RefreshControl,
+  TouchableOpacity
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState, useEffect } from "react";
@@ -12,18 +13,26 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import BackButton from "../components/BackButton";
 import { Pedometer } from "expo-sensors";
 import { BarChart, ProgressChart } from "react-native-chart-kit";
+import Distance from '../assets/distance.svg';
+import Calories from "../assets/calories.svg";
+import Left from '../assets/left.svg';
+import Right from "../assets/right.svg";
 
 const StepsScreen = () => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
   const [pastStepCount, setPastStepCount] = useState(0);
-  const [currentStepCount, setCurrentStepCount] = useState(0);
+  const [todayStepCount, setTodayStepCount] = useState(0);
   const [array, setArray] = useState([]);
-  const [date, setDate] = useState([])
+  const [date, setDate] = useState([]);
+  
+  const [count, setCount] = useState(6);
+  const [dateCardArray, setDateCardArray] = useState([]);
 
   const navigation = useNavigation();
   let arr = [];
   let dateArray = [];
+  let dateCard = []
 
   const subscribe = async () => {
     const isAvailable = await Pedometer.isAvailableAsync();
@@ -35,14 +44,14 @@ const StepsScreen = () => {
       let start = new Date(end.getFullYear(),end.getMonth(),end.getDate(),0,0,0);
    
       for (let i = 0; i < 7; i ++) {
-        console.log("End:", end.toString());
-        console.log("Start: ", start.toString());
         const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
 
         if (pastStepCountResult) {
           //append new result to first in array
           arr.unshift(pastStepCountResult.steps);
-          dateArray.unshift(start.toDateString().slice(0,3));
+          console.log(start.toDateString())
+          dateArray.unshift(start.toDateString().slice(0, 3));
+          dateCard.unshift(start.toDateString().slice(0, 10));
 
           // change end date
           end.setFullYear(start.getFullYear(), start.getMonth(), start.getDate());
@@ -52,13 +61,14 @@ const StepsScreen = () => {
           //change start date
           start.setTime(start.getTime() - (24*3600000));
         }
-        console.log(arr);
       }
       dateArray.push("nil")
-      arr.push(Number(Math.max(...arr).toPrecision(1)) + 10000);
+      arr.push(Number(Math.max(...arr).toPrecision(1)) + 4000);
+      //console.log(arr);
       setArray(arr);
       setDate(dateArray);
-      setCurrentStepCount(arr[6]);
+      setDateCardArray(dateCard);
+      setTodayStepCount(arr[6]);
       setTimeout(() => {
         setRefreshing(false);
       }, 500);
@@ -70,11 +80,25 @@ const StepsScreen = () => {
     }
   };
 
-  const value = (currentStepCount / 5000 )> 1 ? 1 : currentStepCount/5000;
+  const previous = () =>{
+    setCount(count - 1);
+  };
+
+  const next = () => {
+    setCount(count + 1);
+  };
+
+
+  const value = (todayStepCount / 5000 )> 1 ? 1 : todayStepCount/5000;
 
   useEffect(() => {
     const subscription = subscribe();
   }, []);
+
+  useEffect(() => {
+    setTodayStepCount(array.length === 0 ? 0 : array[count]);
+  },[count])
+
 
   const chartConfig = {
     backgroundGradientFrom: "#212a3e",
@@ -95,18 +119,50 @@ const StepsScreen = () => {
   };
 
   return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView refreshControl= {
-          <RefreshControl refreshing={refreshing} onRefresh={subscribe} tintColor={"#212A3E"}/>
-        }>
-        <StatusBar barStyle="dark-content" />
-        <View>
-          <BackButton back={() => navigation.goBack()} />
-        </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      <View>
+        <BackButton back={() => navigation.goBack()} />
+      </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={subscribe}
+            tintColor={"#212A3E"}
+          />
+        }
+      >
         <View style={{ zIndex: -1 }}>
           <View style={styles.progress}>
-            <View>
-              <Text style={styles.progressText}>Daily Step Tracker</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "flex-start",
+                position: "relative",
+              }}
+            >
+              {count >= 1 && (
+                <TouchableOpacity
+                  onPress={previous}
+                  style={{ left: 20, position: "absolute", padding: 10 }}
+                >
+                  <Left height={20} width={20} />
+                </TouchableOpacity>
+              )}
+              <View>
+                <Text style={styles.headerText}>{dateCardArray[count]}</Text>
+              </View>
+              {count < 6 && (
+                <TouchableOpacity
+                  onPress={next}
+                  style={{ right: 20, position: "absolute", padding: 10 }}
+                >
+                  <Right height={20} width={20} />
+                </TouchableOpacity>
+              )}
             </View>
             <ProgressChart
               data={{
@@ -124,23 +180,30 @@ const StepsScreen = () => {
               }}
             />
             <Text style={styles.progressText}>
-              {currentStepCount} out of 5,000 steps today
+              {todayStepCount} out of 5,000 steps
             </Text>
             <Text style={styles.progressSmallText}>
-              Dist. Travelled: {(currentStepCount / 1300).toFixed(3)} km
+              Progress: {((todayStepCount / 5000) * 100).toFixed(2)} %
             </Text>
-            <Text style={styles.progressSmallText}>
-              Calories Burnt: {(currentStepCount * 0.04615).toFixed(0)} kcal
-            </Text>
-            <Text style={styles.progressSmallText}>
-              Progress: {(currentStepCount / 5000) * 100}%
-            </Text>
+          </View>
+          <View style={styles.detailsContainer}>
+            <View style={styles.details}>
+              <Distance width={40} height={40} />
+              <Text style={styles.progressSmallText}>
+                {(todayStepCount / 1300).toFixed(3)} km
+              </Text>
+            </View>
+            <View style={styles.details}>
+              <Calories width={40} height={40} />
+              <Text style={styles.progressSmallText}>
+                {(todayStepCount * 0.04615).toFixed(0)} kcal
+              </Text>
+            </View>
           </View>
           <Text style={styles.text}>Steps Taken in Last 7 Days</Text>
           <View style={styles.barChart}>
             <BarChart
               style={{
-                // marginHorizontal: "1%",
                 backgroundColor: "#212A3E",
                 paddingTop: 20,
                 borderRadius: 20,
@@ -168,9 +231,8 @@ const StepsScreen = () => {
             />
           </View>
         </View>
-        </ScrollView>
-      </SafeAreaView>
-    
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -207,6 +269,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "FiraSans_600SemiBold_Italic",
     paddingBottom: 2,
+    textAlign: 'center'
+  },
+  headerText: {
+    fontSize: 18,
+    color: "white",
+    fontFamily: "FiraSans_600SemiBold_Italic",
+    paddingBottom: 2,
+    marginLeft: 40,
+    position: "absolute",
+    left: 80,
   },
   progressSmallText: {
     fontSize: 14,
@@ -220,5 +292,20 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 5, height: 5 },
     shadowOpacity: 0.7,
     shadowRadius: 10,
+  },
+  detailsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginTop: 20,
+  },
+  details: {
+    borderWidth: 1,
+    borderRadius: 20,
+    width: "45%",
+    height: 60,
+    backgroundColor: "#212A3E",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
 });
