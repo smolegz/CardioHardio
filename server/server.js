@@ -5,10 +5,10 @@ const { getFirestore } = require('firebase-admin/firestore');
 const express = require('express');
 
 // Logistic Regression Function
-async function logisticRegression(dateQueried) {
+async function logisticRegression(userData) {
     
     // Fetch Data from Firestore
-    const userData = await getDataForLR(dateQueried);
+    // const userData = await getDataForLR(dateQueried);
 
     // Load CSV file
     const dataset = [];
@@ -78,45 +78,54 @@ async function logisticRegression(dateQueried) {
     };
 }
 
-async function getDataForLR(dateQueried) {
-    try {
-        // Initalise Server
-        var admin = require("firebase-admin");
-        var serviceAccount = require("./serviceAccountKey.json");
+// async function getDataForLR(dateQueried) {
+//     try {
+//         // Initalise Server
+//         var admin = require("firebase-admin");
+//         var serviceAccount = require("./serviceAccountKey.json");
         
-        if (!admin.apps.length) {
-            admin.initializeApp({
-                credential: admin.credential.cert(serviceAccount),
-                databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
-            });
-        }
+//         if (!admin.apps.length) {
+//             admin.initializeApp({
+//                 credential: admin.credential.cert(serviceAccount),
+//                 databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
+//             });
+//         }
         
-        const db = getFirestore();
-        const docRef = db.collection('UserData').doc(dateQueried);
-        const docSnapshot = await docRef.get();
+//         const db = getFirestore();
+//         const docRef = db.collection('UserData').doc(dateQueried);
+//         const docSnapshot = await docRef.get();
         
-        if (docSnapshot.exists) {
-            const docFields = docSnapshot.data();
-            const { alcohol, gender, activity, smoking, age, weight, height } = docFields;
-            const BMI = weight / Math.pow( height / 100, 2);
-            const fieldsArr = [ alcohol, gender, activity, smoking, age, BMI];
-            return fieldsArr;
-        } else {
-            console.log('Doc not found');
-            return [];
-        }
-    } catch (error) {
-        console.error('Cannot obtain data', error);
-    }
-} 
+//         if (docSnapshot.exists) {
+//             const docFields = docSnapshot.data();
+//             const { alcohol, gender, activity, smoking, age, weight, height } = docFields;
+//             const BMI = weight / Math.pow( height / 100, 2);
+//             const fieldsArr = [ alcohol, gender, activity, smoking, age, BMI];
+//             return fieldsArr;
+//         } else {
+//             console.log('Doc not found');
+//             return [];
+//         }
+//     } catch (error) {
+//         console.error('Cannot obtain data', error);
+//     }
+// } 
 
 const app = express();
 const PORT = 8000;
 
 app.get('/predict', async (req, res) => {
-    const predictions = await logisticRegression('2023-06-08');
+    const { AlcoholDrinking, Sex, PhysicalActivity, Smoking, Age, Weight, Height } = req.query;
+    const userData = [
+        parseFloat(AlcoholDrinking), 
+        parseFloat(Sex), 
+        parseFloat(PhysicalActivity),
+        parseFloat(Smoking), 
+        parseFloat(Age),
+        parseFloat(Weight/((Height/100) ** 2))
+    ];
+    const prediction = await logisticRegression(userData);
 
-    res.send(predictions);
+    res.json({prediction});
 });
 
 app.listen(PORT, () => {
