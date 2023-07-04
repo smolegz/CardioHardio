@@ -361,7 +361,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
-    borderColor: "grey",
+    borderColor: "#212A3E",
     backgroundColor: "#212A3E",
     flexDirection: "row",
     justifyContent: "space-evenly",
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
-    borderColor: "grey",
+    borderColor: "#212A3E",
     backgroundColor: "#212A3E",
   },
   saving: {

@@ -32,7 +32,7 @@ const StepsScreen = () => {
   const navigation = useNavigation();
   let arr = [];
   let dateArray = [];
-  let dateCard = []
+  let dateCard = [];
 
   const subscribe = async () => {
     const isAvailable = await Pedometer.isAvailableAsync();
@@ -64,14 +64,17 @@ const StepsScreen = () => {
       }
       dateArray.push("nil")
       arr.push(Number(Math.max(...arr).toPrecision(1)) + 4000);
-      //console.log(arr);
+      for (let i = 0; i < dateCard.length; i++) {
+        dateCard[i] = dateCard[i].slice(0,3) + ", " + dateCard[i].slice(4)
+      }
       setArray(arr);
       setDate(dateArray);
       setDateCardArray(dateCard);
       setTodayStepCount(arr[6]);
+      setCount(6);
       setTimeout(() => {
         setRefreshing(false);
-      }, 500);
+      }, 750);
 
       return Pedometer.watchStepCount((result) => {
         // setCurrentStepCount(result.steps);
@@ -119,11 +122,9 @@ const StepsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <SafeAreaView edges={["bottom", "left", "right"]} />
       <StatusBar barStyle="dark-content" />
-      <View>
-        <BackButton back={() => navigation.goBack()} />
-      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -133,8 +134,13 @@ const StepsScreen = () => {
             tintColor={"#212A3E"}
           />
         }
+        style={{ paddingTop: "3%" }}
       >
-        <View style={{ zIndex: -1 }}>
+        <View>
+          <BackButton back={() => navigation.goBack()} />
+        </View>
+
+        <View>
           <View style={styles.progress}>
             <View
               style={{
@@ -180,7 +186,8 @@ const StepsScreen = () => {
               }}
             />
             <Text style={styles.progressText}>
-              {todayStepCount} out of 5,000 steps
+              {todayStepCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+              out of 5,000 steps
             </Text>
             <Text style={styles.progressSmallText}>
               Progress: {((todayStepCount / 5000) * 100).toFixed(2)} %
@@ -208,7 +215,6 @@ const StepsScreen = () => {
                 paddingTop: 20,
                 borderRadius: 20,
                 width: "100%",
-                marginTop: "3%",
                 overflow: "hidden",
               }}
               data={{
@@ -220,7 +226,7 @@ const StepsScreen = () => {
                 ],
               }}
               width={430}
-              height={320}
+              height={420}
               chartConfig={chartConfig}
               verticalLabelRotation={0}
               withHorizontalLabels={true}
@@ -232,7 +238,7 @@ const StepsScreen = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -242,6 +248,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginLeft: 10,
+    paddingTop: StatusBar.currentHeight,
   },
   text: {
     fontSize: 26,
@@ -250,26 +257,25 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   progress: {
-    width: "80%",
+    width: "97%",
     height: 280,
     flexDirection: "column",
     justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: "#212A3E",
-    marginLeft: "10%",
-    marginTop: 20,
+    marginTop: 30,
     borderRadius: 30,
     shadowColor: "#212A3E",
-    shadowOffset: { width: 7, height: 7 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
+    shadowOffset: { width: 5, height: 7 },
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
   },
   progressText: {
     fontSize: 18,
     color: "white",
     fontFamily: "FiraSans_600SemiBold_Italic",
     paddingBottom: 2,
-    textAlign: 'center'
+    textAlign: "center",
   },
   headerText: {
     fontSize: 18,
@@ -278,25 +284,32 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
     marginLeft: 40,
     position: "absolute",
-    left: 80,
+    left: 120,
   },
   progressSmallText: {
     fontSize: 14,
     color: "white",
     fontFamily: "FiraSans_600SemiBold_Italic",
+    width: "40%",
+    textAlign: "center",
   },
   barChart: {
     width: "97%",
     justifyContent: "center",
     shadowColor: "#212A3E",
+    borderRadius: 20,
     shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 0.7,
-    shadowRadius: 10,
+    shadowOpacity: 0.6,
+    shadowRadius: 2,
+    backgroundColor: "white",
+    marginTop: '3%',
+    marginBottom: 50,
   },
   detailsContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    marginTop: 20,
+    justifyContent: "space-between",
+    marginTop: 30,
+    width: "97%",
   },
   details: {
     borderWidth: 1,

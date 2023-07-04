@@ -18,13 +18,15 @@ const HomeScreen = () => {
 
   useFocusEffect(() => {
     console.log("Effect is running");
+    
     setURL(currentUser?.photoURL);
     setName(currentUser?.displayName);
+
   });
 
   useEffect(
     () => {
-      setTimeout(() => setIsLoading(false), 730)
+      setTimeout(() => setIsLoading(false), 730);
     }
   ,[]);
 

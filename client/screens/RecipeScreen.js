@@ -38,7 +38,6 @@ const RecipeScreen = () => {
   },[])
 
   const searchFilterFunction = (text) => {
-    console.log(filteredData.length);
     if (text) {
       const newData = DATA.filter((item) => {
         const itemData = item.title
@@ -84,9 +83,10 @@ const RecipeScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <SafeAreaView/>
       <StatusBar barStyle="dark-content" />
-      <ScrollView style={styles.scrollview}>
+      <ScrollView>
         <View style={styles.header}>
           <BackButton back={() => navigation.goBack()} />
           <SearchBar
@@ -290,7 +290,7 @@ const RecipeScreen = () => {
           </Modal>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -31,7 +31,7 @@ const DATA = [
     name: "BMI",
   },
   {
-    activities: "Pedometer",
+    activities: "Steps Tracker",
     id: "2",
     color: "#6B9CDE",
     photo: <Two style={{ height: 120, width: 120 }} />,
@@ -225,12 +225,12 @@ const styles = StyleSheet.create({
     color: "white",
   },
   curve: {
-    zIndex: "-1",
     backgroundColor: "#212A3E",
     height: 128,
     borderBottomEndRadius: 28,
     borderBottomLeftRadius: 28,
     width: "100%",
+    
   },
   svg: {
     height: 20,
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
   MenuContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    width: "100%",
+    width: "98%",
     justifyContent: "flex-start",
     flex: 1,
   },
