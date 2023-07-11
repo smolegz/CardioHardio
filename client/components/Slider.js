@@ -103,6 +103,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 2,
     backgroundColor: "#212A3E",
+    borderWidth: 1,
+    borderColor: "#212A3E",
   },
   buttonText: {
     color: "white",

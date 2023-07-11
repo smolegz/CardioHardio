@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from "react-native-select-dropdown";
 import { db } from "../firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { userRefid } from "./LoginScreen";
+import { userRefid } from "./RegisterScreen";
 import { useAuth, setupProfile } from "../firebase";
 import Welcome from "../assets/welcome.svg";
 

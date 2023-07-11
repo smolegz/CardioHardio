@@ -23,31 +23,6 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const navigation = useNavigation();
 
-  const createUserProfile = async (userAuth) => {
-    if (!userAuth) return;
-    const createdAt = new Date();
-    const userRef = await addDoc(collection(db, "users"), {
-      userEmail: email,
-      createdAt: createdAt,
-      name: null,
-    }).then((userRef) => {
-      userRefid = userRef.id;
-      console.log("id of: ", userRefid);
-    });
-    navigation.replace("Details");
-  };
-
-  const handleSignUp = () => {
-    createUserWithEmailAndPassword(fireAuth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        console.log("Successfully signed up: ", user.email);
-        createUserProfile(userCredentials);
-        alert("Successful");
-      })
-      .catch((error) => alert(error.message));
-  };
-
   const getQuery = async (q) => {
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -97,10 +72,10 @@ const LoginScreen = () => {
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleSignUp}
+          onPress={() => navigation.push("Register")}
           style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.buttonOutlineText}>Register</Text>
+          <Text style={styles.buttonOutlineText}>I am a new user!</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
