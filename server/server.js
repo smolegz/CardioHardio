@@ -69,46 +69,14 @@ async function logisticRegression(userData) {
     const prediction = model.predict(normalisePredict);
     const predictedArray = prediction.arraySync();
     console.log(userData);
-    if (predictedArray[0] < 0.8) {
-        console.log('Heart Disease predicted', predictedArray);
-        return 'Heart Disease predicted';
+    if (predictedArray[0][0] < 0.9) {
+        console.log('Heart Disease predicted', predictedArray[0][0]);
+        return 1;
     } else {
-        console.log('Heart Disease not predicted', predictedArray);
-        return 'Heart Disease not predicted';
+        console.log('Heart Disease not predicted', predictedArray[0][0]);
+        return 0;
     };
 }
-
-// async function getDataForLR(dateQueried) {
-//     try {
-//         // Initalise Server
-//         var admin = require("firebase-admin");
-//         var serviceAccount = require("./serviceAccountKey.json");
-        
-//         if (!admin.apps.length) {
-//             admin.initializeApp({
-//                 credential: admin.credential.cert(serviceAccount),
-//                 databaseURL: "https://cardiohardio-6dbc7-default-rtdb.firebaseio.com"
-//             });
-//         }
-        
-//         const db = getFirestore();
-//         const docRef = db.collection('UserData').doc(dateQueried);
-//         const docSnapshot = await docRef.get();
-        
-//         if (docSnapshot.exists) {
-//             const docFields = docSnapshot.data();
-//             const { alcohol, gender, activity, smoking, age, weight, height } = docFields;
-//             const BMI = weight / Math.pow( height / 100, 2);
-//             const fieldsArr = [ alcohol, gender, activity, smoking, age, BMI];
-//             return fieldsArr;
-//         } else {
-//             console.log('Doc not found');
-//             return [];
-//         }
-//     } catch (error) {
-//         console.error('Cannot obtain data', error);
-//     }
-// } 
 
 const app = express();
 const PORT = 8000;

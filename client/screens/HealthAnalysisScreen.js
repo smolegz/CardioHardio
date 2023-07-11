@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Linking, TextInput, Button, KeyboardAvoidingView, StatusBar } from "react-native";
+import { StyleSheet, Text, View, Linking, TextInput, Button, KeyboardAvoidingView, StatusBar, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -8,17 +8,43 @@ import Slider from '@react-native-community/slider';
 import Toggle from "react-native-toggle-element";
 
 const HealthAnalysisScreen = () => {
-  const [prediction, setPrediction] = useState([{}]);
+  const [prediction, setPrediction] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [isPredictDisabled, setIsPredictDisabled] = useState(false);
 
   async function logisticRegression() {
+    setLoading(true);
+    setIsPredictDisabled(true);
     try {
-      const result = await axios.get('https://3060-2406-3003-206f-1424-e87b-4f9d-76c-e92.ngrok-free.app/predict', 
+      const result = await axios.get('https://691b-2406-3003-206f-1424-8836-611c-4758-197f.ngrok-free.app/predict', 
       { params: { AlcoholDrinking, Sex, PhysicalActivity, Smoking, Age, Weight, Height }});
-      console.log('Prediction:', result.data);
-      setPrediction(result.data);
+      console.log('Prediction:', result.data.prediction.toString());
+      setPrediction(result.data.prediction.toString());
     } catch (error) {
       console.log('Failed', error);
+    } finally {
+      setLoading(false);
+      setIsPredictDisabled(false);
     }
+  }
+
+  const renderResults = () => {
+    if (loading) {
+      return (
+        <View style = {styles.loadingContainer}> 
+          <ActivityIndicator size = "large" color = "#ffffff"/>
+        </View>
+      );
+    } else if (prediction != '') {
+      return (
+        <View style={[styles.resultContainer, prediction === '0' ? styles.noDisease : styles.disease]}>
+          <Text style = {styles.predictionText}>
+            {prediction === '0' ? 'No Heart Disease Predicted' : 'Heart Disease Predicted'}
+          </Text>
+        </View>
+      );
+    }
+    return null;
   }
 
   async function saveData() {
@@ -29,38 +55,41 @@ const HealthAnalysisScreen = () => {
     };
 
     if (toggleValueSmoke == true) {
-      setSmoking(1);
-    } else {
       setSmoking(0);
+    } else {
+      setSmoking(1);
     }
 
     if (toggleValueAct == true) {
-      setPhysical(1);
-    } else {
       setPhysical(0);
+    } else {
+      setPhysical(1);
     }
 
     if (toggleValueAlco == true) {
-      setAlcohol(1);
-    } else {
       setAlcohol(0);
+    } else {
+      setAlcohol(1);
     }
   };
 
-  
   const performFunction = async () => {
     await saveData();
     await logisticRegression();
   }
+
   // Data for Backend Predictor
-  const [AlcoholDrinking, setAlcohol] = useState('');
-  const [Sex, setSex] = useState('');
-  const [PhysicalActivity, setPhysical] = useState('');
-  const [Smoking, setSmoking] = useState('');
+  const [AlcoholDrinking, setAlcohol] = useState(0);
+  const [Sex, setSex] = useState(1);
+  const [PhysicalActivity, setPhysical] = useState(0);
+  const [Smoking, setSmoking] = useState(0);
   const [Age, setAge] = useState(18);
   const [Weight, setWeight] = useState(50);
   const [Height, setHeight] = useState(160);
   const [male, setMale] = useState(true);
+  const [toggleValueSmoke, setToggleValueSmoke] = useState(false);
+  const [toggleValueAct, setToggleValueAct] = useState(false);
+  const [toggleValueAlco, setToggleValueAlco] = useState(false);
 
   // Back button
   const navigation = useNavigation();
@@ -73,11 +102,6 @@ const HealthAnalysisScreen = () => {
   const toFemale = () => {
     setMale(false);
   }
-
-  // Toggle for Smoking, Activity
-  const [toggleValueSmoke, setToggleValueSmoke] = useState(false);
-  const [toggleValueAct, setToggleValueAct] = useState(false);
-  const [toggleValueAlco, setToggleValueAlco] = useState(false);
 
   return (
     <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -118,14 +142,14 @@ const HealthAnalysisScreen = () => {
       </View>
             
       <View style = {styles.bottomContainer}>
-        <View style={styles.toggleContainer}>
+        <View style={styles.toggleContainer1}>
           <Text style={{ fontFamily: "FiraSans_300Light", fontSize: 18 }}>
-                  Do you smoke?
+                  Smoker
             </Text>
             <View style={styles.data}>
               <Toggle
                 value={toggleValueSmoke}
-                onPress={(newState) => setToggleValueSmoke(newState)}
+                onPress={(smokeState) => setToggleValueSmoke(smokeState)}
                 leftTitle="No"
                 rightTitle="Yes"
                 trackBar={{
@@ -133,6 +157,8 @@ const HealthAnalysisScreen = () => {
                   inActiveBackgroundColor:"#6fccd1",
                   borderActiveColor:"#333b80",
                   borderInActiveColor:"#377275",
+                  width: 90,
+                  height: 50,
                 }}
                 thumbButton={{
                   activeBackgroundColor:"#55306b",
@@ -142,14 +168,14 @@ const HealthAnalysisScreen = () => {
             </View>
         </View>
 
-        <View style={styles.toggleContainer}>
+        <View style={styles.toggleContainer2}>
           <Text style={{ fontFamily: "FiraSans_300Light", fontSize: 18 }}>
-                  Did you exercise today?
+                  Exercised
             </Text>
             <View style={styles.data}>
               <Toggle
                 value={toggleValueAct}
-                onPress={(newState) => setToggleValueAct(newState)}
+                onPress={(actState) => setToggleValueAct(actState)}
                 leftTitle="No"
                 rightTitle="Yes"
                 trackBar={{
@@ -157,6 +183,8 @@ const HealthAnalysisScreen = () => {
                   inActiveBackgroundColor:"#6fccd1",
                   borderActiveColor:"#333b80",
                   borderInActiveColor:"#377275",
+                  width: 90,
+                  height: 50,
                 }}
                 thumbButton={{
                   activeBackgroundColor:"#55306b",
@@ -166,14 +194,14 @@ const HealthAnalysisScreen = () => {
             </View>
         </View>
 
-        <View style={styles.toggleContainer}>
+        <View style={styles.toggleContainer3}>
           <Text style={{ fontFamily: "FiraSans_300Light", fontSize: 18 }}>
-                  Did you drink alcohol today?
+                  Alcohol
             </Text>
             <View style={styles.data}>
               <Toggle
                 value={toggleValueAlco}
-                onPress={(newState) => setToggleValueAlco(newState)}
+                onPress={(alcoState) => setToggleValueAlco(alcoState)}
                 leftTitle="No"
                 rightTitle="Yes"
                 trackBar={{
@@ -181,6 +209,8 @@ const HealthAnalysisScreen = () => {
                   inActiveBackgroundColor:"#6fccd1",
                   borderActiveColor:"#333b80",
                   borderInActiveColor:"#377275",
+                  width: 90,
+                  height: 50,
                 }}
                 thumbButton={{
                   activeBackgroundColor:"#55306b",
@@ -238,10 +268,17 @@ const HealthAnalysisScreen = () => {
             value={160}
           />
         </View>
-        <Button title="Predict" onPress={performFunction} />
-        <Text style={styles.prediction}>
-          {prediction !== '' ? `Prediction: ${prediction}` : null}  
-        </Text>
+
+        <TouchableOpacity style = {styles.predict} onPress = {performFunction} disabled = {isPredictDisabled}>
+          <Text
+            style={[
+              styles.genderText,
+            ]}
+            >
+              Predict
+            </Text>
+        </TouchableOpacity>
+        {renderResults()}
       </View>  
     </KeyboardAvoidingView>
   );
@@ -266,13 +303,15 @@ const styles = StyleSheet.create({
     height: 40,
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 5,
+    marginBottom: 20,
   },
   male: {
     borderWidth: 2,
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
-    width: "30%",
+    height:50,
+    width:100,
     justifyContent: "center",
     borderEndWidth: 0,
     borderColor: "#342CC9",
@@ -286,7 +325,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
-    width: "30%",
+    height:50,
+    width:100,
     justifyContent: "center",
     borderColor: "#DD55DD",
     borderLeftColor: "#DD55DD",
@@ -310,9 +350,19 @@ const styles = StyleSheet.create({
   bottomContainer: {
     justifyContent: "center",
     alignItems: "center",
+    flexDirection:"row",
   },
-  toggleContainer: {
+  toggleContainer1: {
     alignItems:"center",
+  },
+  toggleContainer2: {
+    alignItems:"center",
+    marginRight: 20,
+    marginLeft: 30,
+  },
+  toggleContainer3: {
+    alignItems:"center",
+    marginLeft: 10,
   },
   data: {
     justifyContent: "center",
@@ -326,12 +376,53 @@ const styles = StyleSheet.create({
     height: 10,
   },
   heightweightText: {
-    fontSize: 10,
+    fontSize: 30,
     padding: 5,
     fontFamily: "FiraSans_400Regular_Italic",
   },
   prediction: {
     fontSize: 15,
+  },
+  loadingContainer: {
+    backgroundColor: '#000000',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 12,
+  },
+  resultContainer: {
+    backgroundColor: '#ffffff',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 12,
+  },
+  noDisease: {
+    backgroundColor: 'green',
+  },
+  disease: {
+    backgroundColor: 'red',
+  },
+  predictionText: {
+    fontSize: 18,
+    color: '#000000',
+    textAlign: 'center',
+  },
+  predict: {
+    borderWidth: 2,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    height:50,
+    width:100,
+    justifyContent: "center",
+    borderEndWidth: 0,
+    borderColor: "#151B54",
+    backgroundColor: "#151B54",
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
+    marginBottom: 10,
   },
 })
 
