@@ -42,7 +42,7 @@ const HomeScreen = () => {
         >
           <Loading width="200" height="200" />
           <ActivityIndicator size="large" color="#212A3E" />
-          <Text style={{ fontFamily: "FiraSans_400Regular_Italic" }}>
+          <Text style={{ fontFamily: "FiraSans_400Regular_Italic", marginTop: '5%' }}>
             Something is brewin'...
           </Text>
         </View>

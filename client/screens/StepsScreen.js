@@ -17,6 +17,7 @@ import Distance from '../assets/distance.svg';
 import Calories from "../assets/calories.svg";
 import Left from '../assets/left.svg';
 import Right from "../assets/right.svg";
+import Goal from '../assets/goal.svg'
 
 const StepsScreen = () => {
   const [refreshing, setRefreshing] = React.useState(false);
@@ -63,7 +64,7 @@ const StepsScreen = () => {
         }
       }
       dateArray.push("nil")
-      arr.push(Number(Math.max(...arr).toPrecision(1)) + 4000);
+      arr.push(Number(Math.max(...arr).toPrecision(1)) + 5000);
       for (let i = 0; i < dateCard.length; i++) {
         dateCard[i] = dateCard[i].slice(0,3) + ", " + dateCard[i].slice(4)
       }
@@ -170,6 +171,7 @@ const StepsScreen = () => {
                 </TouchableOpacity>
               )}
             </View>
+            {((todayStepCount / 5000) * 100).toFixed(0) >= 100 ? <Goal width={'45%'} height={'45%'} /> :
             <ProgressChart
               data={{
                 data: [value],
@@ -184,7 +186,7 @@ const StepsScreen = () => {
                 marginLeft: 0,
                 paddingVertical: 5,
               }}
-            />
+            />}
             <Text style={styles.progressText}>
               {todayStepCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
               out of 5,000 steps

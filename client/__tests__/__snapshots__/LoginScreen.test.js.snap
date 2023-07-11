@@ -1,0 +1,490 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slider renders correctly 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <RCTScrollView
+      bottomButton={false}
+      bounces={false}
+      data={
+        [
+          {
+            "image": 1,
+            "text": "An easy-to-use app to keep you healthy!",
+            "title": "Welcome to CardioHARDio",
+          },
+          {
+            "image": 1,
+            "text": "Our app offer features that you'll need daily.",
+            "title": "Stay active with us!",
+          },
+          {
+            "image": 1,
+            "text": "Stay healthy for your loved ones!",
+            "title": "Keeping a healthy heart!",
+          },
+        ]
+      }
+      dotClickEnabled={true}
+      extraData={1}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={true}
+      initialNumToRender={3}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onDone={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      pagingEnabled={true}
+      removeClippedSubviews={false}
+      renderDoneButton={[Function]}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      showDoneButton={true}
+      showNextButton={true}
+      showPrevButton={false}
+      showSkipButton={false}
+      showsHorizontalScrollIndicator={false}
+      stickyHeaderIndices={[]}
+      style={
+        {
+          "flex": 1,
+          "flexDirection": "row",
+        }
+      }
+      viewabilityConfigCallbackPairs={[]}
+    >
+      <View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "flex": 1,
+                "width": 0,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "white",
+                  "flex": 1,
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Image
+                source={1}
+                style={
+                  {
+                    "borderColor": "transparent",
+                    "borderRadius": 50,
+                    "borderWidth": 1,
+                    "height": "40%",
+                    "marginBottom": 30,
+                    "width": "90%",
+                  }
+                }
+              />
+              <View>
+                <Text
+                  style={
+                    {
+                      "fontFamily": "FiraSans_700Bold",
+                      "fontSize": 28,
+                      "marginBottom": 10,
+                      "textAlign": "center",
+                    }
+                  }
+                >
+                  Welcome to CardioHARDio
+                </Text>
+                <Text
+                  style={
+                    {
+                      "fontFamily": "FiraSans_300Light",
+                      "fontSize": 16,
+                      "textAlign": "center",
+                    }
+                  }
+                >
+                  An easy-to-use app to keep you healthy!
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "flex": 1,
+                "width": 0,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "white",
+                  "flex": 1,
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Image
+                source={1}
+                style={
+                  {
+                    "borderColor": "transparent",
+                    "borderRadius": 50,
+                    "borderWidth": 1,
+                    "height": "40%",
+                    "marginBottom": 30,
+                    "width": "90%",
+                  }
+                }
+              />
+              <View>
+                <Text
+                  style={
+                    {
+                      "fontFamily": "FiraSans_700Bold",
+                      "fontSize": 28,
+                      "marginBottom": 10,
+                      "textAlign": "center",
+                    }
+                  }
+                >
+                  Stay active with us!
+                </Text>
+                <Text
+                  style={
+                    {
+                      "fontFamily": "FiraSans_300Light",
+                      "fontSize": 16,
+                      "textAlign": "center",
+                    }
+                  }
+                >
+                  Our app offer features that you'll need daily.
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={
+            [
+              {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "flex": 1,
+                "width": 0,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "white",
+                  "flex": 1,
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Image
+                source={1}
+                style={
+                  {
+                    "borderColor": "transparent",
+                    "borderRadius": 50,
+                    "borderWidth": 1,
+                    "height": "40%",
+                    "marginBottom": 30,
+                    "width": "90%",
+                  }
+                }
+              />
+              <View>
+                <Text
+                  style={
+                    {
+                      "fontFamily": "FiraSans_700Bold",
+                      "fontSize": 28,
+                      "marginBottom": 10,
+                      "textAlign": "center",
+                    }
+                  }
+                >
+                  Keeping a healthy heart!
+                </Text>
+                <Text
+                  style={
+                    {
+                      "fontFamily": "FiraSans_300Light",
+                      "fontSize": 16,
+                      "textAlign": "center",
+                    }
+                  }
+                >
+                  Stay healthy for your loved ones!
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        {
+          "bottom": 16,
+          "justifyContent": "center",
+          "left": 16,
+          "position": "absolute",
+          "right": 16,
+        }
+      }
+    >
+      <RCTSafeAreaView>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": 16,
+              "justifyContent": "center",
+              "margin": 16,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "backgroundColor": "#212A3E",
+                "borderRadius": 5,
+                "height": 10,
+                "marginHorizontal": 4,
+                "opacity": 1,
+                "width": 10,
+              }
+            }
+          />
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "backgroundColor": "#E0E0E0",
+                "borderRadius": 5,
+                "height": 10,
+                "marginHorizontal": 4,
+                "opacity": 1,
+                "width": 10,
+              }
+            }
+          />
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "backgroundColor": "#E0E0E0",
+                "borderRadius": 5,
+                "height": 10,
+                "marginHorizontal": 4,
+                "opacity": 1,
+                "width": 10,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            {
+              "position": "absolute",
+              "right": 0,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "white",
+                  "fontSize": 18,
+                  "padding": 12,
+                }
+              }
+            >
+              Next
+            </Text>
+          </View>
+        </View>
+      </RCTSafeAreaView>
+    </View>
+  </View>
+</View>
+`;
