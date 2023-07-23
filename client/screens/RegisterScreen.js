@@ -12,9 +12,8 @@ import React, { useState } from "react";
 import { fireAuth, db, colRef } from "../firebase";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
 } from "firebase/auth";
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import Register from "../assets/register.svg";
 import BackButton from "../components/BackButton";
 

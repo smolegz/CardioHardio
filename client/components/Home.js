@@ -49,7 +49,7 @@ const DATA = [
     id: "4",
     color: "#6BDE7A",
     photo: <Four style={{ height: 120, width: 120 }} />,
-    name: "",
+    name: "Analysis",
   },
   {
     activities: "Coming Soon",
@@ -111,12 +111,6 @@ const Home = (props) => {
   const goToProfile = () => {
     navigation.navigate("Profile");
   };
-
-  const goHealthAnalysis = () => {
-    navigation.navigate("Analysis");
-  };
-
-  
 
   return (
     <View style={{ width: "100%", flex: 1 }}>
@@ -184,20 +178,6 @@ const Home = (props) => {
                 </TouchableOpacity>
               );
             })}
-            <TouchableOpacity
-              style={styles.MenuButton}
-              onPress={goHealthAnalysis}
-            >
-              <Text
-                style={{
-                  fontFamily: "PassionOne_400Regular",
-                  fontSize: 18,
-                  color: "#000000",
-                }}
-              >
-                Health Analysis (For Yuan Ting)
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.signout}>

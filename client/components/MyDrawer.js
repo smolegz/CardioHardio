@@ -2,7 +2,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "../screens/HomeScreen";
 import AboutScreen from "../screens/AboutScreen";
 import NotificationsScreen from "../screens/NotifScreen";
-import SupportScreen from "../screens/SupportScreen";
+import ContactScreen from "../screens/SupportScreen";
 import React from "react";
 
 const Drawer = createDrawerNavigator();
@@ -45,13 +45,8 @@ function MyDrawer() {
         options={{ headerShown: false }}
       />
       <Drawer.Screen
-        name="Notifications"
-        component={NotificationsScreen}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="Support"
-        component={SupportScreen}
+        name="Contact Us"
+        component={ContactScreen}
         options={{ headerShown: false }}
       />
     </Drawer.Navigator>

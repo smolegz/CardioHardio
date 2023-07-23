@@ -10,10 +10,9 @@ import {
 import React, { useState } from "react";
 import { fireAuth, db, colRef } from "../firebase";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { query, where, getDocs } from "firebase/firestore";
 import One from "../assets/Home/one.svg";
 
 let userRefid;
@@ -143,11 +142,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     borderColor: "#212A3E",
     borderWidth: 2,
-  },
-  buttonOutlineText: {
-    color: "#212A3E",
-    fontWeight: "700",
-    fontSize: 16,
   },
   buttonText: {
     color: "white",

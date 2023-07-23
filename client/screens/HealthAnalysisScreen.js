@@ -16,7 +16,7 @@ const HealthAnalysisScreen = () => {
     setLoading(true);
     setIsPredictDisabled(true);
     try {
-      const result = await axios.get('https://691b-2406-3003-206f-1424-8836-611c-4758-197f.ngrok-free.app/predict', 
+      const result = await axios.get('https://192.168.50.21:8000/predict', 
       { params: { AlcoholDrinking, Sex, PhysicalActivity, Smoking, Age, Weight, Height }});
       console.log('Prediction:', result.data.prediction.toString());
       setPrediction(result.data.prediction.toString());
