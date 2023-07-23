@@ -16,8 +16,8 @@ const HealthAnalysisScreen = () => {
     setLoading(true);
     setIsPredictDisabled(true);
     try {
-      const result = await axios.get('https://192.168.50.21:8000/predict', 
-      { params: { AlcoholDrinking, Sex, PhysicalActivity, Smoking, Age, Weight, Height }});
+      const result = await axios.get('https://5a15-2406-3003-206f-1424-80aa-d73-8b57-98e5.ngrok-free.app/predict', 
+      { params: { AlcoholDrinking, male, PhysicalActivity, Smoking, Age, Weight, Height }});
       console.log('Prediction:', result.data.prediction.toString());
       setPrediction(result.data.prediction.toString());
     } catch (error) {
@@ -47,49 +47,18 @@ const HealthAnalysisScreen = () => {
     return null;
   }
 
-  async function saveData() {
-    if (male == true) {
-      setSex(1);
-    } else {
-      setSex(0);
-    };
-
-    if (toggleValueSmoke == true) {
-      setSmoking(0);
-    } else {
-      setSmoking(1);
-    }
-
-    if (toggleValueAct == true) {
-      setPhysical(0);
-    } else {
-      setPhysical(1);
-    }
-
-    if (toggleValueAlco == true) {
-      setAlcohol(0);
-    } else {
-      setAlcohol(1);
-    }
-  };
-
   const performFunction = async () => {
-    await saveData();
     await logisticRegression();
   }
 
   // Data for Backend Predictor
-  const [AlcoholDrinking, setAlcohol] = useState(0);
-  const [Sex, setSex] = useState(1);
-  const [PhysicalActivity, setPhysical] = useState(0);
-  const [Smoking, setSmoking] = useState(0);
+  const [AlcoholDrinking, setAlcohol] = useState(false);
+  const [PhysicalActivity, setPhysical] = useState(false);
+  const [Smoking, setSmoking] = useState(false);
   const [Age, setAge] = useState(18);
   const [Weight, setWeight] = useState(50);
   const [Height, setHeight] = useState(160);
   const [male, setMale] = useState(true);
-  const [toggleValueSmoke, setToggleValueSmoke] = useState(false);
-  const [toggleValueAct, setToggleValueAct] = useState(false);
-  const [toggleValueAlco, setToggleValueAlco] = useState(false);
 
   // Back button
   const navigation = useNavigation();
@@ -148,8 +117,8 @@ const HealthAnalysisScreen = () => {
             </Text>
             <View style={styles.data}>
               <Toggle
-                value={toggleValueSmoke}
-                onPress={(smokeState) => setToggleValueSmoke(smokeState)}
+                value={Smoking}
+                onPress={(smokeState) => setSmoking(smokeState)}
                 leftTitle="No"
                 rightTitle="Yes"
                 trackBar={{
@@ -174,8 +143,8 @@ const HealthAnalysisScreen = () => {
             </Text>
             <View style={styles.data}>
               <Toggle
-                value={toggleValueAct}
-                onPress={(actState) => setToggleValueAct(actState)}
+                value={PhysicalActivity}
+                onPress={(actState) => setPhysical(actState)}
                 leftTitle="No"
                 rightTitle="Yes"
                 trackBar={{
@@ -200,8 +169,8 @@ const HealthAnalysisScreen = () => {
             </Text>
             <View style={styles.data}>
               <Toggle
-                value={toggleValueAlco}
-                onPress={(alcoState) => setToggleValueAlco(alcoState)}
+                value={AlcoholDrinking}
+                onPress={(alcoState) => setAlcohol(alcoState)}
                 leftTitle="No"
                 rightTitle="Yes"
                 trackBar={{

@@ -82,15 +82,22 @@ const app = express();
 const PORT = 8000;
 
 app.get('/predict', async (req, res) => {
-    const { AlcoholDrinking, Sex, PhysicalActivity, Smoking, Age, Weight, Height } = req.query;
+    const { AlcoholDrinking, male, PhysicalActivity, Smoking, Age, Weight, Height } = req.query;
+    
+    const alcohol = (AlcoholDrinking === 'true') ? 1 : 0;
+    const sex = (male === 'true') ? 1 : 0;
+    const act = (PhysicalActivity === 'true') ? 1 : 0;
+    const smoke = (Smoking === 'true') ? 1 : 0;
+
     const userData = [
-        parseFloat(AlcoholDrinking), 
-        parseFloat(Sex), 
-        parseFloat(PhysicalActivity),
-        parseFloat(Smoking), 
+        parseFloat(alcohol), 
+        parseFloat(sex), 
+        parseFloat(act),
+        parseFloat(smoke), 
         parseFloat(Age),
         parseFloat(Weight/((Height/100) ** 2))
     ];
+
     const prediction = await logisticRegression(userData);
 
     res.json({prediction});
