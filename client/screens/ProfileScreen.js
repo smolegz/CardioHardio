@@ -16,6 +16,7 @@ import { updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { userRefid } from "./LoginScreen";
+import { userRefid2 } from "./RegisterScreen";
 import Back from "../assets/back.svg";
 import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -81,7 +82,7 @@ const ProfileScreen = () => {
     handleImagePicked(result);
   };
 
-  const userRef = doc(db, "users", userRefid);
+  const userRef = doc(db, "users", userRefid ? userRefid : userRefid2 );
 
   useEffect(() => {
     setName(currentUser?.displayName);

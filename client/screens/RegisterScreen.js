@@ -17,7 +17,7 @@ import { addDoc, collection } from "firebase/firestore";
 import Register from "../assets/register.svg";
 import BackButton from "../components/BackButton";
 
-let userRefid;
+let userRefid2;
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,8 +33,8 @@ const RegisterScreen = () => {
       createdAt: createdAt,
       name: null,
     }).then((userRef) => {
-      userRefid = userRef.id;
-      console.log("id of: ", userRefid);
+      userRefid2 = userRef.id;
+      console.log("id of: ", userRefid2);
     });
     navigation.replace("Details");
   };
@@ -112,7 +112,7 @@ const RegisterScreen = () => {
   );
 }
 
-export { userRefid };
+export { userRefid2 };
 export default RegisterScreen;
 
 const styles = StyleSheet.create({

@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import SelectDropdown from "react-native-select-dropdown";
 import { db } from "../firebase";
 import { doc, updateDoc } from "firebase/firestore";
-import { userRefid } from "./RegisterScreen";
+import { userRefid2 } from "./RegisterScreen";
 import { useAuth, setupProfile } from "../firebase";
 import Welcome from "../assets/welcome.svg";
 
@@ -23,14 +23,15 @@ const DetailsScreen = () => {
   const [gender, setGender] = useState();
 
   const navigation = useNavigation();
-  const userRef = doc(db, "users", userRefid);
+  console.log("1", userRefid2);
+  const userRef = doc(db, "users", userRefid2);
   const currentUser = useAuth();
 
   const handleName = () => {
     const userData = async () => {
       const snap = await updateDoc(userRef, {
         name: name,
-        id: userRefid,
+        id: userRefid2,
         gender: gender,
         age: age,
       });
